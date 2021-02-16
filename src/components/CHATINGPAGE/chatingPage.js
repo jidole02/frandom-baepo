@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as c from '../STYLECOMPONENT/chatingStyle'
 import { io } from "socket.io-client";
 
-const socket = io("ws://sonchaegeon.shop", {
+const socket = io("wss://sonchaegeon.shop", {
     query: {
         token: "Bearer " + window.localStorage.getItem("token")
     }
