@@ -7,7 +7,6 @@ const socket = io("wss://sonchaegeon.shop", {
         token: "Bearer " + window.localStorage.getItem("token")
     }
 });
-
 function ChatingPage(Lang) {
     const a = Lang.Lang;
     const [mode, setMode] = useState();
@@ -21,7 +20,12 @@ function ChatingPage(Lang) {
 
     const [data, setData] = useState("");
 
-    const [name,setName] = useState("")
+    const [name, setName] = useState("")
+
+    const [msg, setMsg] = useState("");
+
+    const [find, setFined] = useState(false);
+
     useEffect(() => {
         // 소켓 연결
         socket.on("connect", () => {
@@ -40,39 +44,50 @@ function ChatingPage(Lang) {
         // 조인 룸
         socket.on("joinRoom", (nickname) => {
             setName(nickname)
+            socket.on("matched", () => {
+                setFined(true);
+            })
+        })
+        socket.on("matched", () => {
+            setFined(true)
         })
     }, [])
 
-    // 메세지 받기
-    socket.on("receiveMessage", (e) => {
+    useEffect(() => {
+        // 메세지 받기
+        socket.on("receiveMessage", (e) => {
+            setMsg(e);
+        })
+    }, [])
+
+    useEffect(() => {
         setChating([
             ...Chating,
-            {you:e}
+            { you: msg }
         ])
-    })
+    }, [msg])
 
     const Sub = (e) => {
         setData(e.target.value);
     }
 
-    const Send = (e) => {
-        e.preventDefault();
-        setChating([
-            ...Chating,
-            {me:data}
-        ])
-        socket.emit("sendMessage", data)
-        setData("")
-    }
-    const SendInput = (e) => {
-        if (e.key === "Enter") {
+    /*     const Send = (e) => {
+            e.preventDefault();
             setChating([
                 ...Chating,
                 {me:data}
             ])
             socket.emit("sendMessage", data)
             setData("")
-        }
+        } */
+    const SendInput = (e) => {
+        e.preventDefault();
+        setChating([
+            ...Chating,
+            { me: data }
+        ])
+        socket.emit("sendMessage", data)
+        setData("")
     }
 
     return (
@@ -89,7 +104,7 @@ function ChatingPage(Lang) {
                     </c.SettingMenu>
                     <c.SettingChoose style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-exclamation"></i>{(a === 0) ? "REPORT" : "신고하기"}</c.SettingChoose>
                     <c.SettingChoose
-                        onClick={()=>{window.location.href="/match"}}
+                        onClick={() => { window.location.href = "/match" }}
                         style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-sign-out-alt"></i>{(a === 0) ? "EXIT" : "나가기"}
                     </c.SettingChoose>
                     <c.SettingChoose
@@ -104,22 +119,23 @@ function ChatingPage(Lang) {
                 <c.Chating>
                     <c.Alram>
                         <p>랜덤채팅 상대를 찾고 있습니다....</p>
-                        <p>{name!=="" && name+" 님이 들어왔습니다."}</p>
+                        <p>{name !== "" && name + " 님이 들어왔습니다."}</p>
+                        <p>{find && "상대방이 매치되었습니다."}</p>
                     </c.Alram>
-                    {Chating.map((res, index)=>{
-                        return(
-                            <div key ={index}>
-                            {res.me!=="" && res.me !== undefined && <c.MyChating>{res.me}</c.MyChating>}
-                            {res.you!=="" && res.you !== undefined &&<c.YouChating>{res.you}</c.YouChating>}
+                    {Chating.map((res, index) => {
+                        return (
+                            <div key={index}>
+                                {res.me != "" && res.me !== undefined && <c.MyChating>{res.me}</c.MyChating>}
+                                {res.you != "" && res.you !== undefined && <c.YouChating>{res.you}</c.YouChating>}
                             </div>
                         )
                     })}
                 </c.Chating>
             </c.ChatingContainer>
             <c.UnderBar style={{ backgroundColor: (mode === 'dark') ? 'rgb(50,50,50)' : '' }}>
-                <c.InputChatBox>
-                    <c.InputChat value={data} onKeyPress={SendInput} onChange={Sub} style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '', color: (mode === 'dark') ? 'whitesmoke' : '', border: (mode === 'dark') ? 'none' : '' }} placeholder="보낼 내용을 입력하세요!"></c.InputChat>
-                    <c.SendChatBtn onClick={Send} style={{ border: (mode === 'dark') ? 'none' : '' }}><i className="fas fa-paper-plane"></i></c.SendChatBtn>
+                <c.InputChatBox onSubmit={SendInput}>
+                    <c.InputChat value={data} onChange={Sub} style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '', color: (mode === 'dark') ? 'whitesmoke' : '', border: (mode === 'dark') ? 'none' : '' }} placeholder="보낼 내용을 입력하세요!"></c.InputChat>
+                    {/*                     <c.SendChatBtn onClick={Send} style={{ border: (mode === 'dark') ? 'none' : '' }}><i className="fas fa-paper-plane"></i></c.SendChatBtn> */}
                 </c.InputChatBox>
             </c.UnderBar>
         </c.ChatingBox>

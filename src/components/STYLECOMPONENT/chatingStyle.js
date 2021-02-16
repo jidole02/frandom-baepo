@@ -56,11 +56,11 @@ display:flex;
 `
 
 export const InputChat = styled.input`
-width:80%;
+width:100%;
 height:100%;
 padding:0 0;
 border: 1px solid #B1ACAC;
-border-radius:10px 0px 0px 10px;
+border-radius:10px;
 outline:none;
 padding: 0 3%;
 font-size:1.7vmin;
