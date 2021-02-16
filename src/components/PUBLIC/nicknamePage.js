@@ -26,7 +26,7 @@ function NicknamePage(Lang){
             "password" : data.password
         }).then((e)=>{
             window.localStorage.setItem("token", e.data.accessToken)
-            window.location.href = window.location.href +  "/match" 
+            window.location.href = "/match" 
         }).catch(()=>{
             setToggle(false)
             window.alert("아이디 혹은 비밀번호를 확인해주세요.")

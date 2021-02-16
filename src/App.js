@@ -35,7 +35,7 @@ function App() {
         <Route exact path="/nickname"><NicknamePage Lang={LValue}></NicknamePage></Route>
         <Route path="/chating"><ChatingPage Lang={LValue}></ChatingPage></Route>
         <Route path="/signup"><SignUp></SignUp></Route>
-        <Route path="/nickname/match"><Match></Match></Route>
+        <Route path="/match"><Match></Match></Route>
         </Switch>
         <s.LanguageSlide style={{marginRight:margin,display:"none"}}>
           <button>

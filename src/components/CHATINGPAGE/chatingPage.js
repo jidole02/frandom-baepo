@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as c from '../STYLECOMPONENT/chatingStyle'
 import { io } from "socket.io-client";
 
-const socket = io("ws://3.12.85.2:3000/", {
+const socket = io("ws://sonchaegeon.shop", {
     query: {
         token: "Bearer " + window.localStorage.getItem("token")
     }
@@ -89,7 +89,7 @@ function ChatingPage(Lang) {
                     </c.SettingMenu>
                     <c.SettingChoose style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-exclamation"></i>{(a === 0) ? "REPORT" : "신고하기"}</c.SettingChoose>
                     <c.SettingChoose
-                        onClick={()=>{window.location.href="/nickname/match"}}
+                        onClick={()=>{window.location.href="/match"}}
                         style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-sign-out-alt"></i>{(a === 0) ? "EXIT" : "나가기"}
                     </c.SettingChoose>
                     <c.SettingChoose
