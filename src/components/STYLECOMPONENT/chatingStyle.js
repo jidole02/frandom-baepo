@@ -23,6 +23,7 @@ box-shadow:3px 3px 6px rgb(0,0,0,0.2);
 export const ChatingContainer = styled.div`
 width:80%;
 height:100%;
+overflow:scroll;
 `
 
 export const RightSideBar = styled.div`
@@ -150,12 +151,14 @@ input{
 
 export const Chating = styled.div`
 width:70%;
-height:85%;
+/* height:85%; */
 position:absolute;
 margin-left:5%;
 display:flex;
 flex-direction:column;
 justify-content:flex-end;
+position:relative;
+margin-bottom:100px;
 `
 
 export const MyChating = styled.div`

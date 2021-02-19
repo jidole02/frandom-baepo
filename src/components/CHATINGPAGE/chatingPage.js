@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import * as c from '../STYLECOMPONENT/chatingStyle'
 import { io } from "socket.io-client";
 import {Request} from '../axios'
@@ -10,6 +10,7 @@ const socket = io("wss://sonchaegeon.shop", {
 });
 function ChatingPage(Lang) {
     const a = Lang.Lang;
+    const ChatingDiv = useRef();
     const [mode, setMode] = useState();
     const DarkMode = () => {
         setMode('dark')
@@ -90,6 +91,10 @@ function ChatingPage(Lang) {
         ])
     }, [msg])
 
+    useEffect(()=>{
+        ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
+    },[Chating])
+
     const report =()=>{
         Request("POST", "v1/user/report",{"Content-type":"application/json", "Authorization":"Bearer " + window.localStorage.getItem("token")}, 
         {
@@ -154,7 +159,7 @@ function ChatingPage(Lang) {
                         style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}>{(a === 0) ? "LOGOUT" : "로그아웃"}</c.SettingChoose>
                 </c.SettingChat>
             </c.SideBar>
-            <c.ChatingContainer>
+            <c.ChatingContainer ref={ChatingDiv}>
                 <c.Chating>
                     <c.Alram>
                         <p>랜덤채팅 상대를 찾고 있습니다....</p>
