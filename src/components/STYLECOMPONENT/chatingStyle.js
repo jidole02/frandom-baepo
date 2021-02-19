@@ -23,7 +23,6 @@ box-shadow:3px 3px 6px rgb(0,0,0,0.2);
 export const ChatingContainer = styled.div`
 width:80%;
 height:100%;
-overflow:scroll;
 `
 
 export const RightSideBar = styled.div`
@@ -50,7 +49,7 @@ min-width:100%;
 
 export const InputChatBox = styled.form`
 width:38%;
-height:50%;
+height:52%;
 border:none;
 display:flex;
 `
@@ -58,11 +57,10 @@ display:flex;
 export const InputChat = styled.input`
 width:100%;
 height:100%;
-padding:0 0;
 border: 1px solid #B1ACAC;
 border-radius:10px;
 outline:none;
-padding: 0 3%;
+padding: 0 10px;
 font-size:1.7vmin;
 color:rgb(0,0,0);
 transition:1s;
@@ -197,5 +195,38 @@ color:gray;
 font-size:1.3vmin;
 p{
     padding:20px 0;
+}
+`
+
+export const Modal = styled.div`
+width:100%;
+height:90%;
+position:absolute;
+z-index:200;
+display:flex;
+align-items:center;
+justify-content:center;
+background-color:transparent;
+`
+
+export const ModalCont = styled.div`
+width:300px;
+height:150px;
+background-color:white;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+margin-left:10%;
+border:3px solid skyblue;
+border-radius:20px;
+font-weight:bold;
+font-size:18px;
+box-shadow:3px 3px 10px rgb(10,10,10,0.2);
+p{
+    margin-bottom:20px;
+    font-size:18px;
+    font-weight:bold;
+    color:tomato;
 }
 `
