@@ -34,6 +34,8 @@ function ChatingPage(Lang) {
 
     const [match,setMatch] = useState(false);
 
+    const [leaveAlr,setLeaveAlr] = useState(false)
+
     const [reportData,setReportData] = useState({
         title:"",
         cause:""
@@ -68,11 +70,8 @@ function ChatingPage(Lang) {
         socket.on("joinRoom", (nickname) => {
             setName(nickname)
             socket.on("matched", () => {
+                setLeaveAlr(false)
                 setMatch(true)
-                setChating([
-                    ...Chating,
-                    { me: "상대방이 들어왔습니다." }
-                ])
                 outRoom(false);
                 setFined(true);
                 setTimeout(()=>{
@@ -81,22 +80,19 @@ function ChatingPage(Lang) {
             })
         })
         socket.on("matched", () => {
+            setLeaveAlr(false)
             setMatch(true)
-            setChating([
-                ...Chating,
-                { me: "상대방이 들어왔습니다." }
-            ])
             setFined(true)
             setTimeout(()=>{
                 setFined(false);
             },1500)
         })
         socket.on("leaveRoom",()=>{
+            setLeaveAlr(true)
             setFined(false)
             setMatch(false)
             setChating([
-                ...Chating,
-                { me: "상대방이 나갔습니다." }
+                { me: "" }
             ])
             setLeave(true)
             setTimeout(()=>{
@@ -222,7 +218,9 @@ function ChatingPage(Lang) {
                 <c.Chating>
                     <c.Alram>
                         <p>랜덤채팅 상대를 찾고 있습니다....</p>
-                        <p>{name !== "" && name + " 님이 들어왔습니다."}</p>
+                        <p>{match && "상대방을 찾았습니다."}</p>
+                        <p>{leaveAlr && "상대방이 나갔습니다."}</p>
+                        <p>{(match) && name !== "" && name + " 님이 들어왔습니다."}</p>
                     </c.Alram>
                     {Chating.map((res, index) => {
                         return (
