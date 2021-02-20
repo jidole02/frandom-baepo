@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FirstPage from './components/FIRSTPAGE/firstPage' 
 import * as s from './components/STYLECOMPONENT/publicStyle'
-import {BrowserRouter,Link,Route, Switch} from 'react-router-dom'
+import {BrowserRouter,Route, Switch} from 'react-router-dom'
 import NicknamePage from './components/PUBLIC/nicknamePage'
 import 미국 from './components/IMG/america.png'
 import 한국 from './components/IMG/korea.png'
@@ -29,7 +29,9 @@ function App() {
     <BrowserRouter>
     <GlobalStyled></GlobalStyled>
       <s.Background>
-        <s.SignUp><Link to="/signup" style={{color:"black", display:"flex",justifyContent:"center",alignItems:"center", width:"100%",height:"100%", marginTop:"0"}}><i className="fas fa-sign-out-alt"></i></Link></s.SignUp>
+        <s.SignUp><i 
+        onClick={()=>{window.location.href = "https://github.com/DSM-Frandom"}}
+        className="fab fa-github"></i></s.SignUp>
         <Switch>
         <Route exact path="/"><FirstPage Lang={LValue}></FirstPage></Route>
         <Route exact path="/nickname"><NicknamePage Lang={LValue}></NicknamePage></Route>
