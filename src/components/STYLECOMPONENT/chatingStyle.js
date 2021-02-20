@@ -228,11 +228,12 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 margin-left:10%;
-border:3px solid skyblue;
 border-radius:20px;
 font-weight:bold;
 font-size:18px;
 box-shadow:3px 3px 10px rgb(10,10,10,0.2);
+line-height:150%;
+border:2px solid blue;
 p{
     margin-bottom:20px;
     font-size:18px;

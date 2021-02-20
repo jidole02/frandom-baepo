@@ -32,6 +32,8 @@ function ChatingPage(Lang) {
 
     const [leave,setLeave] = useState(false);
 
+    const [match,setMatch] = useState(false);
+
     const [reportData,setReportData] = useState({
         title:"",
         cause:""
@@ -66,6 +68,11 @@ function ChatingPage(Lang) {
         socket.on("joinRoom", (nickname) => {
             setName(nickname)
             socket.on("matched", () => {
+                setMatch(true)
+                setChating([
+                    ...Chating,
+                    { me: "상대방이 들어왔습니다." }
+                ])
                 outRoom(false);
                 setFined(true);
                 setTimeout(()=>{
@@ -74,13 +81,23 @@ function ChatingPage(Lang) {
             })
         })
         socket.on("matched", () => {
+            setMatch(true)
+            setChating([
+                ...Chating,
+                { me: "상대방이 들어왔습니다." }
+            ])
             setFined(true)
             setTimeout(()=>{
                 setFined(false);
             },1500)
         })
         socket.on("leaveRoom",()=>{
-            console.log('상대방이 나감')
+            setFined(false)
+            setMatch(false)
+            setChating([
+                ...Chating,
+                { me: "상대방이 나갔습니다." }
+            ])
             setLeave(true)
             setTimeout(()=>{
                 setLeave(false);
@@ -172,7 +189,7 @@ function ChatingPage(Lang) {
                 :{display:"none"}}        
         >
             <c.ModalCont>
-                <p>! 알람 !</p>
+{/*                 <p>! 알람 !</p> */}
                 {find && "상대방이 매치되었습니다!"}
                 {leave && <> 상대방이 나갔습니다. <br/> 상대방을 찾겠습니다.</>}
             </c.ModalCont>
@@ -219,7 +236,27 @@ function ChatingPage(Lang) {
             </c.ChatingContainer>
             <c.UnderBar style={{ backgroundColor: (mode === 'dark') ? 'rgb(50,50,50)' : '' }}>
                 <c.InputChatBox onSubmit={SendInput}>
-                    <c.InputChat value={data} onChange={Sub} style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '', color: (mode === 'dark') ? 'whitesmoke' : '', border: (mode === 'dark') ? 'none' : '' }} placeholder="보낼 내용을 입력하세요!"></c.InputChat>
+                    
+
+                    {
+                        (match) ? (
+                            <c.InputChat 
+                                value={data} 
+                                onChange={Sub} 
+                                style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '', color: (mode === 'dark') ? 'whitesmoke' : '', border: (mode === 'dark') ? 'none' : '' }} 
+                                placeholder="보낼 내용을 입력하세요!"
+                            />
+                        )
+                        :
+                        (
+                            <c.InputChat 
+                                value={data} 
+                                style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '', color: (mode === 'dark') ? 'whitesmoke' : '', border: (mode === 'dark') ? 'none' : '' }} 
+                                placeholder="매칭되면 입력 가능합니다."
+                                readOnly
+                            />
+                        )
+                    }
                     {/*                     <c.SendChatBtn onClick={Send} style={{ border: (mode === 'dark') ? 'none' : '' }}><i className="fas fa-paper-plane"></i></c.SendChatBtn> */}
                 </c.InputChatBox>
             </c.UnderBar>
