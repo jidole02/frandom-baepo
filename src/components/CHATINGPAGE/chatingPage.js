@@ -32,6 +32,21 @@ function ChatingPage(Lang) {
 
     const [leave,setLeave] = useState(false);
 
+    const [reportData,setReportData] = useState({
+        title:"",
+        cause:""
+    })
+
+    const [modalOn,setModalOn] = useState(false);
+
+    const Report =(e)=>{
+        const {name,value} = e.target;
+        setReportData({
+            ...reportData,
+            [name] : value
+        })
+    }
+
     useEffect(() => {
         // 소켓 연결
         socket.on("connect", () => {
@@ -98,12 +113,14 @@ function ChatingPage(Lang) {
     const report =()=>{
         Request("POST", "v1/user/report",{"Content-type":"application/json", "Authorization":"Bearer " + window.localStorage.getItem("token")}, 
         {
-            title : "신고합니데이",
-            description : "함 보세요"
-        }).then((e)=>{
+            title : reportData.title,
+            description : reportData.cause
+        }).then(()=>{
+            setModalOn(false)
             alert("정상적으로 신고되었습니다.")
-        }).catch((err)=>{
-            console.log(err)
+        }).catch(()=>{
+            setModalOn(false)
+            alert("신고 에러가 났습니다")
         })
     }
 
@@ -123,6 +140,31 @@ function ChatingPage(Lang) {
 
     return (
         <>
+        {modalOn && 
+                <c.ModalWrapper>
+                <p>!! 신고하기 !!</p>
+                <c.ReportInput
+                    placeholder="신고 제목을 입력하세요."
+                    onChange={Report}
+                    name="title"
+                    value={reportData.title}
+                />
+                <c.ReportInput
+                    placeholder="신고 사유를 입력하세요."
+                    onChange={Report}
+                    name="cause"
+                    value={reportData.cause}
+                />
+                <c.ReportBtnCont>
+                        <button
+                            onClick={()=>setModalOn(false)}
+                        >취소</button>
+                        <button
+                            onClick={report}
+                        >신고</button>
+                </c.ReportBtnCont>
+            </c.ModalWrapper>
+        }
         <c.Modal
                 style={find?{display:"flex"}
                 :inRoom?{display:"flex"}
@@ -146,7 +188,7 @@ function ChatingPage(Lang) {
                     <c.SettingMenu>
                         <i className="fas fa-cog"></i>{(a === 0) ? "SETTING" : "설정"}
                     </c.SettingMenu>
-                    <c.SettingChoose onClick={report} style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-exclamation"></i>{(a === 0) ? "REPORT" : "신고하기"}</c.SettingChoose>
+                    <c.SettingChoose onClick={()=>setModalOn(true)} style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-exclamation"></i>{(a === 0) ? "REPORT" : "신고하기"}</c.SettingChoose>
                     <c.SettingChoose
                         onClick={() => { window.location.href = "/match" }}
                         style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-sign-out-alt"></i>{(a === 0) ? "EXIT" : "나가기"}
