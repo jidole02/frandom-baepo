@@ -30,7 +30,7 @@ function App() {
     <GlobalStyled></GlobalStyled>
       <s.Background>
         <s.SignUp><i 
-        onClick={()=>{window.location.href = "https://github.com/DSM-Frandom"}}
+        onClick={()=>{window.open("https://github.com/DSM-Frandom",'_blank')}}
         className="fab fa-github"></i></s.SignUp>
         <Switch>
         <Route exact path="/"><FirstPage Lang={LValue}></FirstPage></Route>

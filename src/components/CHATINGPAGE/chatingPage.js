@@ -70,21 +70,21 @@ function ChatingPage(Lang) {
                 setFined(true);
                 setTimeout(()=>{
                     setFined(false);
-                },1000)
+                },1500)
             })
         })
         socket.on("matched", () => {
             setFined(true)
             setTimeout(()=>{
                 setFined(false);
-            },1000)
+            },1500)
         })
         socket.on("leaveRoom",()=>{
             console.log('상대방이 나감')
             setLeave(true)
             setTimeout(()=>{
                 setLeave(false);
-            },1000)
+            },1500)
             socket.emit("search", () => {
                 console.log("search");
             });
@@ -142,14 +142,14 @@ function ChatingPage(Lang) {
         <>
         {modalOn && 
                 <c.ModalWrapper>
-                <p>!! 신고하기 !!</p>
+                <p>신고하기</p>
                 <c.ReportInput
                     placeholder="신고 제목을 입력하세요."
                     onChange={Report}
                     name="title"
                     value={reportData.title}
                 />
-                <c.ReportInput
+                <c.ReportText
                     placeholder="신고 사유를 입력하세요."
                     onChange={Report}
                     name="cause"
@@ -174,7 +174,7 @@ function ChatingPage(Lang) {
             <c.ModalCont>
                 <p>! 알람 !</p>
                 {find && "상대방이 매치되었습니다!"}
-                {leave && <> 상대방이 나갔습니다.</>}
+                {leave && <> 상대방이 나갔습니다. <br/> 상대방을 찾겠습니다.</>}
             </c.ModalCont>
         </c.Modal>
         <c.ChatingBox style={{ backgroundColor: (mode === 'dark') ? 'rgb(70,70,70)' : '' }}>

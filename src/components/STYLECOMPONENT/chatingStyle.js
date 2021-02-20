@@ -24,6 +24,13 @@ export const ChatingContainer = styled.div`
 width:80%;
 height:100%;
 overflow:scroll;
+::-webkit-scrollbar{
+    width:5px;
+    background-color:#D5D5D5;   
+}
+::-webkit-scrollbar-thumb{
+    background-color:#00B9FF;
+}
 `
 
 export const RightSideBar = styled.div`
@@ -141,8 +148,8 @@ cursor: pointer;
 transition:0.5s;
 font-size:1.2vmin;
 display:flex;
-    justify-content:center;
-    align-items:center;
+justify-content:center;
+align-items:center;
 input{
     border:none;
     z-index:40;
@@ -261,6 +268,18 @@ padding: 0 1.5%;
 border:none;
 border-radius:3px;
 `
+
+export const ReportText = styled.textarea`
+width:14%;
+height:10%;
+margin-top:1%;
+padding: 1% 1.5%;
+border:none;
+border-radius:3px;
+font-family:나눔스퀘어;
+outline:none;
+`
+
 
 export const ReportBtnCont = styled.div`
 width:10%;
