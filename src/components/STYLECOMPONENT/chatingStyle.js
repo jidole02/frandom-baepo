@@ -233,3 +233,52 @@ p{
     color:tomato;
 }
 `
+
+export const ModalWrapper = styled.div`
+width:100%;
+height:100vh;
+background-color:rgb(10,10,10,0.5);
+position:absolute;
+z-index:300;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+flex-direction:column;
+p{
+    padding:0.5% 0 ;
+    font-size:2vmin;
+    font-weight:bold;
+    font-family:나눔스퀘어;
+}
+`
+
+export const ReportInput = styled.input`
+width:14%;
+height:5%;
+margin-top:1%;
+padding: 0 1.5%;
+border:none;
+border-radius:3px;
+`
+
+export const ReportBtnCont = styled.div`
+width:10%;
+display:flex;
+justify-content:space-between;
+margin-top:1%;
+button{
+    width:45%;
+    height:35px;
+    border:none;
+    background-color:#00B9FF;
+    font-size:1.5vmin;
+    border-radius:3px;
+    font-weight:bold;
+    color:white;
+    :last-of-type{
+        background-color:tomato;
+        color:white;
+    }
+}
+`

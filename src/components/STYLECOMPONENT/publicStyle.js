@@ -201,17 +201,32 @@ width:40px;
 height:40px;
 right:0;
 top:0;
-background-color:white;
+/* background-color:white; */
 border-radius:80%;
 display:flex;
 justify-content:center;
 align-items:center;
 color:${color};
 margin-top:40px;
-margin-right:40px;
+margin-right:100px;
 cursor: pointer;
 i{
-    font-size:1.8vmin;
-    color:${color};
+    font-size:4vmin;
+    color:white;
+    :hover{
+        opacity:0.7;
+    }
 }
+`
+
+export const Select = styled.select`
+width:18%;
+height:5%;
+padding: 0 1.5%;
+margin-top:1%;
+font-size:1.6vmin;
+color:#B9B9B9;
+outline:none;
+font-family:나눔스퀘어;
+font-weight:bold;
 `
