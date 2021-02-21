@@ -37,7 +37,7 @@ function NicknamePage(Lang){
             { toggle && <Loading></Loading> }
             <f.FirstPageContainer>
                 <h1> FRANDOM!</h1>
-                <f.NicknameInput onChange={Input} name="id" value={data.id} placeholder={(a===0)?"NICKNAME" : "아이디를 입력하세요."}></f.NicknameInput>
+                <f.NicknameInput onChange={Input} name="id" value={data.id} placeholder={(a===0)?"NICKNAME" : "이메일을 입력하세요."}></f.NicknameInput>
                 <f.NicknameInput onChange={Input} name="password" type="password" value={data.password} placeholder={(a===0)?"NICKNAME" : "비밀번호를 입력하세요."}></f.NicknameInput>
                 <f.ButtonContainer2>
                 <f.NickSubButton onClick={SubInputValue}>{(a===0)?"SUBMIT" : "제출하기"}</f.NickSubButton>
