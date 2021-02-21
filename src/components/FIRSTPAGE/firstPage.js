@@ -18,7 +18,7 @@ function FirstPage(Lang){
             <f.ButtonContainer style={{marginTop:"1%"}}>
                 <Link style={LinkStyle} to="/signup"><f.StartButton>{(a===0)?"GET START" : "회원가입"}</f.StartButton></Link> 
             </f.ButtonContainer>
-            <div id='mobonDivBanner_511399'><iframe name='ifrad' id='mobonIframe_511399' src='//www.mediacategory.com/servlet/adBanner?from="+escape(document.referrer)+"&s=511399&igb=63&iwh=720_120&cntad=1&cntsr=1' frameBorder='0' scrolling='no' style={{height:"120px;" ,width:"720px"}}></iframe></div>
+            <div id='mobonDivBanner_511399'><iframe name='ifrad' id='mobonIframe_511399' src='//www.mediacategory.com/servlet/adBanner?from="+escape(document.referrer)+"&s=511399&igb=63&iwh=720_120&cntad=1&cntsr=1' frameBorder='0' scrolling='no' style={{height:"120px" ,width:"720px"}}></iframe></div>
         </f.FirstPageContainer>
     )
 }
