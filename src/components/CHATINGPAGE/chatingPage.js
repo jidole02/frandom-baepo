@@ -206,12 +206,12 @@ function ChatingPage(Lang) {
                         onClick={() => { window.location.href = "/match" }}
                         style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}><i className="fas fa-sign-out-alt"></i>{(a === 0) ? "EXIT" : "나가기"}
                     </c.SettingChoose>
-                    <c.SettingChoose
+{/*                     <c.SettingChoose
                         onClick={() => {
                             window.localStorage.setItem("token", " ")
                             window.location.href = "/";
                         }}
-                        style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}>{(a === 0) ? "LOGOUT" : "로그아웃"}</c.SettingChoose>
+                        style={{ backgroundColor: (mode === 'dark') ? 'rgb(100,100,100)' : '' }}>{(a === 0) ? "LOGOUT" : "로그아웃"}</c.SettingChoose> */}
                 </c.SettingChat>
             </c.SideBar>
             <c.ChatingContainer ref={ChatingDiv}>
@@ -219,7 +219,7 @@ function ChatingPage(Lang) {
                     <c.Alram>
                         <p>랜덤채팅 상대를 찾고 있습니다....</p>
                         <p>{match && "상대방을 찾았습니다."}</p>
-                        <p>{leaveAlr && "상대방이 나갔습니다."}</p>
+                        <p>{leaveAlr && "상대방이 나갔습니다."}</p> 
                         <p>{(match) && name !== "" && name + " 님이 들어왔습니다."}</p>
                     </c.Alram>
                     {Chating.map((res, index) => {
