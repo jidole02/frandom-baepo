@@ -1,8 +1,8 @@
 import * as s from "../STYLECOMPONENT/publicStyle"
 import { useState } from "react"
-import { Request } from '../axios'
 import Loading from '../PUBLIC/loading'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios'
 
 const SignUp = () => {
     const [val, SetVal] = useState({
@@ -27,15 +27,21 @@ const SignUp = () => {
     }
     const SignUpFunc = () => {
         setToggle(true)
-        Request("POST", "v1/auth/register", { "Content-Type": "application/json" },
-            { "username": val.name, "email": val.email, "password": val.password, "age" : val.age, "gender" : val.male}
-        ).then(() => {
+       axios({
+            method:"post",
+            url:"https://sonchaegeon.shop/v1/auth/register",
+            headers:{
+                "Content-Type": "application/json" 
+            },
+            data:{
+                "username": val.name, "email": val.email, "password": val.password, "age" : val.age, "gender" : val.male
+            }
+        }).then((e)=>{
             history.push('/nickname')
-        })
-        .catch(() => {
+        }).catch((err)=>{
+            window.alert(err.response.data.error.message)
             setToggle(false)
-            window.alert("회원가입에 실패했습니다.")
-        })
+        }) 
     }
     return (
         <>

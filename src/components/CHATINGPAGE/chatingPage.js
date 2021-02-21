@@ -11,6 +11,7 @@ const socket = io("wss://sonchaegeon.shop", {
 function ChatingPage(Lang) {
     const a = Lang.Lang;
     const ChatingDiv = useRef();
+    // 밤 낮 모드
     const [mode, setMode] = useState();
     const DarkMode = () => {
         setMode('dark')
@@ -18,31 +19,31 @@ function ChatingPage(Lang) {
     const LightMode = () => {
         setMode('light')
     }
+    // 채팅 내용
     const [Chating, setChating] = useState([])
-
+    // 내가 쓰는 거 임시 저장용
     const [data, setData] = useState("");
-
+    // 상대방 이름
     const [name, setName] = useState("")
-
+    // 상대방 메세지 받아오는 거
     const [msg, setMsg] = useState("");
-
+    // 찾았나 못찾았나 모달 띄울 용도
     const [find, setFined] = useState(false);
-
-    const [inRoom,outRoom] = useState(false);
-
+    // 떠났나 안떠났나
+    // 떠나면 인풋 값도 초기화 해줘야됨,,,
     const [leave,setLeave] = useState(false);
-
+    // 매치 됬나 안됬나
     const [match,setMatch] = useState(false);
-
+    // 떠나면 알람 띄우는 용도
     const [leaveAlr,setLeaveAlr] = useState(false)
-
+    // 신고 사유
     const [reportData,setReportData] = useState({
         title:"",
         cause:""
     })
-
+    // 모달 띄우는 용도
     const [modalOn,setModalOn] = useState(false);
-
+    // 신고 입력 인풋 관리용
     const Report =(e)=>{
         const {name,value} = e.target;
         setReportData({
@@ -52,57 +53,46 @@ function ChatingPage(Lang) {
     }
 
     useEffect(() => {
-        // 소켓 연결
-        socket.on("connect", () => {
-            console.log("connect");
-            socket.emit("search");
-        });
+            // 소켓 연결
+            socket.on("connect", () => {
+                console.log("connect");
+                socket.emit("search");
+            });
 
-        socket.on("disconnect", () => {
-            console.log("disconnect");
-        });
-        // 방 찾기  
-        socket.emit("search", () => {
-            console.log("search");
-        });
+            socket.on("disconnect", () => {
+                console.log("disconnect");
+            });
+            // 방 찾기  
+            socket.emit("search", () => {
+                console.log("search");
+            });
 
-        // 조인 룸
-        socket.on("joinRoom", (nickname) => {
-            setName(nickname)
+            // 조인 룸
+            socket.on("joinRoom", (nickname) => {
+                setName(nickname)
+                socket.on("matched", () => {
+                    setLeaveAlr(false)
+                    setMatch(true)
+                    setFined(true);
+                    setTimeout(()=>{
+                        setFined(false);
+                    },1500)
+                })
+            })
             socket.on("matched", () => {
                 setLeaveAlr(false)
                 setMatch(true)
-                outRoom(false);
-                setFined(true);
+                setFined(true)
                 setTimeout(()=>{
                     setFined(false);
                 },1500)
             })
-        })
-        socket.on("matched", () => {
-            setLeaveAlr(false)
-            setMatch(true)
-            setFined(true)
-            setTimeout(()=>{
-                setFined(false);
-            },1500)
-        })
-        socket.on("leaveRoom",()=>{
-            setLeaveAlr(true)
-            setFined(false)
-            setMatch(false)
-            setChating([
-                { me: "" }
-            ])
-            setLeave(true)
-            setTimeout(()=>{
-                setLeave(false);
-            },1500)
-            socket.emit("search", () => {
-                console.log("search");
-            });
-        }) 
-    
+            socket.on("leaveRoom",()=>{
+                setLeaveAlr(true)
+                setFined(false)
+                setMatch(false)
+                setLeave(true)
+            }) 
     }, [])
 
     useEffect(() => {
@@ -111,18 +101,19 @@ function ChatingPage(Lang) {
             setMsg(e);
         })
     }, [])
-
+    // 상대방 메세지 받아오기 
+    // 이렇게 안하면 루프 존나 걸림
     useEffect(() => {
         setChating([
             ...Chating,
             { you: msg }
         ])
     }, [msg])
-
+    // 채팅 스크롤 아래로 유지하게
     useEffect(()=>{
         ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
     },[Chating])
-
+    // 신고 버튼
     const report =()=>{
         Request("POST", "v1/user/report",{"Content-type":"application/json", "Authorization":"Bearer " + window.localStorage.getItem("token")}, 
         {
@@ -136,11 +127,11 @@ function ChatingPage(Lang) {
             alert("신고 에러가 났습니다")
         })
     }
-
+    // 여기서 내가 보내는 메세지 받고 엔터 치면 넘기는 방식
     const Sub = (e) => {
         setData(e.target.value);
     }
-
+    // 내가 보내는 거
     const SendInput = (e) => {
         e.preventDefault();
         setChating([
@@ -148,6 +139,7 @@ function ChatingPage(Lang) {
             { me: data }
         ])
         socket.emit("sendMessage", data)
+        // 다시 내 메세지 받아야 되니까 초기화
         setData("")
     }
 
@@ -178,16 +170,34 @@ function ChatingPage(Lang) {
                 </c.ReportBtnCont>
             </c.ModalWrapper>
         }
+
         <c.Modal
                 style={find?{display:"flex"}
-                :inRoom?{display:"flex"}
                 :leave?{display:"flex"}
                 :{display:"none"}}        
         >
             <c.ModalCont>
-{/*                 <p>! 알람 !</p> */}
                 {find && "상대방이 매치되었습니다!"}
-                {leave && <> 상대방이 나갔습니다. <br/> 상대방을 찾겠습니다.</>}
+                {leave && <><p> 상대방이 나갔습니다.</p>
+                <div style={{display:"flex"}}>
+                    <button
+                        onClick={()=>{
+                            setChating([])
+                            // 셋 리브 해야 모달 사라짐
+                            setLeave(false);
+                            // 다시 검색 기기
+                            socket.emit("search", () => {
+                                console.log("search");
+                            });
+                        }}
+                    >상대 찾기
+
+                    </button> 
+                    <button
+                        onClick={() => { window.location.href = "/match" }}
+                    >나가기</button>
+                </div>
+                </>}
             </c.ModalCont>
         </c.Modal>
         <c.ChatingBox style={{ backgroundColor: (mode === 'dark') ? 'rgb(70,70,70)' : '' }}>

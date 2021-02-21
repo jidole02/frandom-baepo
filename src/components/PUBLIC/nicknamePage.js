@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import * as f from '../STYLECOMPONENT/publicStyle'
 import {Request} from '../axios'
 import Loading from '../PUBLIC/loading'
+import axios from 'axios'
 
 function NicknamePage(Lang){
     const a = Lang.Lang;
+    const history = useHistory();
     const [data, setData] = useState({
         id : "",
         password: ""
@@ -20,17 +22,36 @@ function NicknamePage(Lang){
     }
     const SubInputValue =()=>{
         setToggle(true)
-        Request("POST", "v1/auth/login",{"Content-type":"application/json"}, 
+/*         Request("POST", "v1/auth/login",{"Content-type":"application/json"}, 
         {
             "email" : data.id,
             "password" : data.password
         }).then((e)=>{
             window.localStorage.setItem("token", e.data.accessToken)
             window.location.href = "/match" 
-        }).catch(()=>{
+        }).catch((err)=>{
+            console.log(err)    
             setToggle(false)
             window.alert("아이디 혹은 비밀번호를 확인해주세요.")
         })
+ */
+        axios({
+            method:"post",
+            url:"https://sonchaegeon.shop/v1/auth/login",
+            headers:{
+                "Content-Type": "application/json" 
+            },
+            data:{
+                "email" : data.id,
+                "password" : data.password
+            }
+        }).then((e)=>{
+            window.localStorage.setItem("token", e.data.accessToken)
+            history.push('/match')
+        }).catch((err)=>{
+            window.alert(err.response.data.error.message)
+            setToggle(false)
+        }) 
     }
     return(
         <>
