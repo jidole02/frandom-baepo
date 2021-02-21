@@ -13,7 +13,10 @@ function FirstPage(Lang){
             <h1> FRANDOM!</h1>
             <h3>{(a===0)?"Enjoy random chat" : "랜덤채팅을 즐겨보세요!"}</h3>
             <f.ButtonContainer>
-                <Link style={LinkStyle} to="/nickname"><f.StartButton>{(a===0)?"GET START" : "시작하기"}</f.StartButton></Link> 
+                <Link style={LinkStyle} to="/nickname"><f.StartButton>{(a===0)?"GET START" : "로그인"}</f.StartButton></Link> 
+            </f.ButtonContainer>
+            <f.ButtonContainer style={{marginTop:"1%"}}>
+                <Link style={LinkStyle} to="/signup"><f.StartButton>{(a===0)?"GET START" : "회원가입"}</f.StartButton></Link> 
             </f.ButtonContainer>
         </f.FirstPageContainer>
     )

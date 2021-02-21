@@ -29,9 +29,12 @@ function App() {
     <BrowserRouter>
     <GlobalStyled></GlobalStyled>
       <s.Background>
-        <s.SignUp><i 
-        onClick={()=>{window.open("https://github.com/DSM-Frandom",'_blank')}}
-        className="fab fa-github"></i></s.SignUp>
+        <s.ItemContainer>
+          <s.SignUp><i 
+            onClick={()=>{window.open("https://github.com/DSM-Frandom",'_blank')}}
+            className="fab fa-github"></i>
+          </s.SignUp>
+        </s.ItemContainer>
         <Switch>
         <Route exact path="/"><FirstPage Lang={LValue}></FirstPage></Route>
         <Route exact path="/nickname"><NicknamePage Lang={LValue}></NicknamePage></Route>

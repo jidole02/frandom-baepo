@@ -195,21 +195,26 @@ color:white;
 margin-top:6%;
 `
 
-export const SignUp = styled.div`
-position:absolute;
-width:40px;
-height:40px;
+export const ItemContainer = styled.div`
 right:0;
 top:0;
+position:absolute;
+margin-top:40px;
+margin-right:100px;
+display:flex;
+`
+
+export const SignUp = styled.div`
+width:40px;
+height:40px;
 /* background-color:white; */
 border-radius:80%;
 display:flex;
 justify-content:center;
 align-items:center;
 color:${color};
-margin-top:40px;
-margin-right:100px;
 cursor: pointer;
+margin-right:30%;
 i{
     font-size:4vmin;
     color:white;
