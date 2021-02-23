@@ -8,7 +8,7 @@ const socket = io("wss://sonchaegeon.shop", {
         token: "Bearer " + window.localStorage.getItem("token")
     }
 });
-function ChatingPage(Lang) {
+const ChatingPage = React.memo((Lang) => {
     const a = Lang.Lang;
     const ChatingDiv = useRef();
     // 밤 낮 모드
@@ -271,6 +271,6 @@ function ChatingPage(Lang) {
         </c.ChatingBox>
         </>
     )
-}
+});
 
 export default ChatingPage;
