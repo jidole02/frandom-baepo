@@ -2,6 +2,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import * as c from '../STYLECOMPONENT/chatingStyle'
 import { io } from "socket.io-client";
 import {Request} from '../axios'
+import {useHistory} from 'react-router-dom'
 
 const socket = io("wss://sonchaegeon.shop", {
     query: {
@@ -9,6 +10,7 @@ const socket = io("wss://sonchaegeon.shop", {
     }
 });
 const ChatingPage = React.memo((Lang) => {
+    const history = useHistory()
     const a = Lang.Lang;
     const ChatingDiv = useRef();
     // 밤 낮 모드
@@ -53,6 +55,9 @@ const ChatingPage = React.memo((Lang) => {
     }
 
     useEffect(() => {
+        if(window.localStorage.getItem("token").length === 1){
+            history.push("/")
+        }
             // 소켓 연결
             socket.on("connect", () => {
                 console.log("connect");
