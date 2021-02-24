@@ -2,21 +2,8 @@ import {color} from '../../style/index'
 import styled from 'styled-components'
 
 export const Background = styled.div`
-overflow:hidden;
 width:100%;
 height:100vh;
-background-color:${color}; 
-overflow:hidden;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-a{
-    position:absolute;
-    color:white;
-    margin-top:46%;
-    font-size:1.3vmin;
-}
 `
 
 export const FirstPageContainer = styled.div`
