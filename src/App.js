@@ -10,25 +10,20 @@ import ChatingPage from './components/CHATINGPAGE/chatingPage'
 import GlobalStyled from './style/globalstyle'
 import SignUp from './components/SIGNUP/signup'
 import Match from './components/MATCH/match'
+import Header from './New/HEADER/header'
+import MainPage from './New/MAIN/main';
+import LoginPage from './New/LOGIN/login';
 
 function App() {
-  const [margin, setMargin] = useState("103%");
-  const [LValue, setLValue] = useState(1);
-  const chooseLanguage =()=>{
-    setMargin('92%')
-  }
-  const korean=()=>{
-    setLValue(1)
-    setMargin('103%')
-  }
-  const amarican=()=>{
-    setLValue(0)
-    setMargin('103%')
-  }
   return (
     <BrowserRouter>
     <GlobalStyled></GlobalStyled>
-      <s.Background>
+    <s.Background>
+      <Route path="/" component={Header}/>
+      <Route exact path="/" component={MainPage}></Route>
+      <Route exact path="/login" component={LoginPage}></Route>
+    </s.Background>
+{/*       <s.Background>
         <s.ItemContainer>
           <s.SignUp><i 
             onClick={()=>{window.open("https://github.com/DSM-Frandom",'_blank')}}
@@ -48,9 +43,9 @@ function App() {
             <img src={한국} alt="" onClick={korean}/>
             <img src={언어} alt="" onClick={chooseLanguage}/>
           </button>
-        </s.LanguageSlide>
+        </s.LanguageSlide> */}
 {/*         <a>{(a==0)?"Made by dsm, in highschool" : "DSM에서 제작되었습니다."}</a> */}
-      </s.Background>
+{/*       </s.Background> */}
     </BrowserRouter>
   );
 }

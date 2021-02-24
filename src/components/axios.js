@@ -8,6 +8,7 @@ export const Request=(method, url, head, data)=>{
         data: data
     }).then((e)=>{
         console.log(e);
+        return e.data
     }).catch((err)=>{
         console.log(err)
     })
