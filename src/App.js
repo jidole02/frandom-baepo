@@ -13,6 +13,8 @@ import Match from './components/MATCH/match'
 import Header from './New/HEADER/header'
 import MainPage from './New/MAIN/main';
 import LoginPage from './New/LOGIN/login';
+import SignupPage from './New/SIGNUP/signup';
+import ChatingComponent from './New/CHATING/chating';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
       <Route path="/" component={Header}/>
       <Route exact path="/" component={MainPage}></Route>
       <Route exact path="/login" component={LoginPage}></Route>
+      <Route exact path="/signup" component={SignupPage}></Route>
+      <Route exact path="/chating" component={ChatingComponent}></Route>
     </s.Background>
 {/*       <s.Background>
         <s.ItemContainer>
