@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import {mainColor} from '../../style/index'
-import {Link} from 'react-router-dom'
 
 export const SvgContainer = styled.div`
     width:90%;

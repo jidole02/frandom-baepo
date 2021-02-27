@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {Link, useHistory} from 'react-router-dom'
 import * as f from '../STYLECOMPONENT/publicStyle'
-import {Request} from '../axios'
 import Loading from '../PUBLIC/loading'
 import axios from 'axios'
 
