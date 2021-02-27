@@ -10,20 +10,45 @@ import React,{useState,useRef,useEffect} from 'react'
 
 import { io } from "socket.io-client";
 
+import ReportModal from './reportModal'
+
 const socket = io("wss://sonchaegeon.shop", {
     query: {
         token: "Bearer " + window.localStorage.getItem("token")
     }
 });
-export default function ChatingComponent() {
+
+const ChatingComponent = React.memo(()=> {
     const history = useHistory();
+
     const [data, setData] = useState("");
-    const [Chating, setChating] = useState([])
+
+    const [Chating, setChating] = useState([]);
+
+    const [RModalState,setRModalState] = useState(false);
+
+    const [OutModal,setOutModal] = useState(false);
+
+    const [msg,setMsg] = useState("");
+
+    const [you,setYou] = useState("");
+
+    const [my,setMy] = useState("");
+
+    const [match,setMatch] = useState(false)
+ 
     const ChatingDiv = useRef();
 
     const ChatingSave = (e) => {
         setData(e.target.value);
     }
+
+    useEffect(()=>{
+        if(window.localStorage.getItem("token").length < 1){
+            alert("로그인 후 이용해주세요!")
+            history.push("/")
+        }
+    },[])
 
     const Send = (e) => {
         e.preventDefault();
@@ -31,7 +56,7 @@ export default function ChatingComponent() {
             ...Chating,
             { chating:data, id:1 }
         ])
-/*         socket.emit("sendMessage", data) */
+        socket.emit("sendMessage", data) 
         setData("")
     }
 
@@ -39,10 +64,62 @@ export default function ChatingComponent() {
         ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
     },[Chating])
 
+    const ReportModalOn=()=>{
+        setRModalState(!RModalState)
+    }
+
+    useEffect(() => {
+            // 소켓 연결
+            socket.on("connect", () => {
+                console.log("connect");
+                socket.emit("search");
+            });
+
+            socket.on("disconnect", () => {
+                console.log("disconnect");
+            });
+            // 방 찾기  
+            socket.emit("search", () => {
+                console.log("search");
+            });
+
+            // 조인 룸
+            socket.on("joinRoom", (nickname) => {
+                setMy(nickname)
+                socket.on("matched", () => {
+                    console.log("상대방 매치")
+                    setMatch(true)
+                })
+            })
+            socket.on("matched", () => {
+                console.log("상대방 매치")
+                setMatch(true)
+            })
+            socket.on("leaveRoom",()=>{
+                console.log("상대방 떠남")
+                setMatch(false)
+            }) 
+    }, [])
+
+    useEffect(() => {
+        // 메세지 받기
+        socket.on("receiveMessage", (e,name) => {
+            setYou(name)
+            setMsg(e)
+        })
+    }, [])
+
+    useEffect(()=>{
+        setChating([
+            ...Chating,
+            { chating:msg, id:2 }
+        ])
+    },[msg])
+
     return(
         <>
-            {/* 상대방 나간 모달 */}
-{/*             <s.ModalContainer>
+        { OutModal &&  
+            <s.ModalContainer>
                 <s.SmallModal>
                     <s.Alert>상대방이 나갔습니다.</s.Alert>
                     <s.MBtnCont>
@@ -52,25 +129,9 @@ export default function ChatingComponent() {
                         }}>나가기</s.MBtn>
                     </s.MBtnCont>
                 </s.SmallModal>
-            </s.ModalContainer> */}
-
-            {/* 상대방 신고 모달 */}
-{/*             <s.ModalContainer>
-                <s.Report>
-                    <s.Alert>신고하기</s.Alert>
-                    <s.Hr/>
-                    <s.ReportInput
-                        placeholder="신고 제목을 입력해주세요."
-                    ></s.ReportInput>
-                    <s.ReportInput
-                        placeholder="신고 제목을 입력해주세요."
-                    ></s.ReportInput>
-                    <s.MBtnCont style={{width:"60%",height:"13%"}}>
-                        <s.MBtn>취소하기</s.MBtn>
-                        <s.MBtn>신고하기</s.MBtn>
-                    </s.MBtnCont>
-                </s.Report>
-            </s.ModalContainer> */}
+            </s.ModalContainer> 
+        }
+        { RModalState && <ReportModal event={ReportModalOn}></ReportModal> }
 
         <s.SvgContainer>
             <일러스트/>
@@ -79,23 +140,23 @@ export default function ChatingComponent() {
         <s.MainContainer>
             <s.ChatingContainer ref={ChatingDiv}>
                 <b>상대방을 찾고 있습니다...</b>
-{/*                 <s.MyChat>
-                    <p>김지민 18 남</p>
-                    <s.MyContainer>안녕하세요</s.MyContainer>
-                </s.MyChat>
-                <s.YouChat>
-                    <p>김지민 18 남</p>
-                    <s.YouContainer>안어린ㅇㄹ</s.YouContainer>
-                </s.YouChat> */}
+                {match && <b>상대방이 매치되었습니다.</b>}
                 {
                     Chating.map((e,index)=>{
                         return (
                             <>
+                            <div key={index}></div>
                             {e.id === 1 && e.chating !== "" &&
-                                <s.MyChat key={index}>
-                                    <p>김지민 18 남</p>
+                                <s.MyChat>
+                                    <p>{my}</p>
                                     <s.MyContainer>{e.chating}</s.MyContainer>
                                 </s.MyChat>
+                            }
+                            {e.id === 2 && e.chating !== "" &&
+                                <s.YouChat>
+                                    <p>{you}</p>
+                                    <s.YouContainer>{e.chating}</s.YouContainer>
+                                </s.YouChat>
                             }
                             </>
                         )
@@ -103,24 +164,38 @@ export default function ChatingComponent() {
                 }
             </s.ChatingContainer>
             <s.InputContainer>
-                <form onSubmit={Send}>
-                    <s.Input
-                        placeholder="보낼 내용을 입력하세요."
-                        onChange={ChatingSave}
-                        value={data}
-                    />
-                </form>
+                {
+                    match === false ? 
+                    <form onSubmit={Send}>
+                        <s.Input
+                            placeholder="매칭 후 입력 가능합니다."
+                            onChange={ChatingSave}
+                            value={data}
+                            readOnly
+                        />
+                    </form>
+                    :
+                    <form onSubmit={Send}>
+                        <s.Input
+                            placeholder="보낼 내용을 입력하세요."
+                            onChange={ChatingSave}
+                            value={data}
+                        />
+                    </form>
+                }
                 <s.MenuBar>
                     <s.MenuBtn
                         onClick={()=>{
-                            history.push("/")
+                            window.location.href = "/"
                         }}
                     ># 채팅종료</s.MenuBtn>
-                    <s.MenuBtn># 신고하기</s.MenuBtn>
+                    <s.MenuBtn onClick={ReportModalOn}># 신고하기</s.MenuBtn>
                     <s.MenuBtn># 파일전송</s.MenuBtn>
                 </s.MenuBar>
             </s.InputContainer>
         </s.MainContainer>
         </>
     )
-}
+})
+
+export default ChatingComponent

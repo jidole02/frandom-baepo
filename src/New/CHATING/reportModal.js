@@ -27,6 +27,7 @@ export default function ReportModal(e) {
                 title:"",
                 cause:""
             })
+            e.event()
         }).catch(()=>{
             alert("신고 에러가 났습니다")
             setReportData({
