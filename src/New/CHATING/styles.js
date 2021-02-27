@@ -59,7 +59,7 @@ export const MenuBar = styled.div`
 `
 
 export const MenuBtn = styled.button`
-    width:28%;
+    width:23%;
     height:45px;
     border-radius:24px;
     border:none;

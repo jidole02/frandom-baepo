@@ -33,9 +33,9 @@ const ChatingComponent = React.memo(()=> {
 
     const [you,setYou] = useState("");
 
-    const [my,setMy] = useState("");
-
     const [match,setMatch] = useState(false)
+
+    const [out,setOut] = useState(true);
  
     const ChatingDiv = useRef();
 
@@ -68,7 +68,7 @@ const ChatingComponent = React.memo(()=> {
         setRModalState(!RModalState)
     }
 
-    useEffect(() => {
+/*     useEffect(() => {
             // 소켓 연결
             socket.on("connect", () => {
                 console.log("connect");
@@ -76,7 +76,7 @@ const ChatingComponent = React.memo(()=> {
             });
 
             socket.on("disconnect", () => {
-                console.log("disconnect");
+                window.location.href="/chating"
             });
             // 방 찾기  
             socket.emit("search", () => {
@@ -84,8 +84,7 @@ const ChatingComponent = React.memo(()=> {
             });
 
             // 조인 룸
-            socket.on("joinRoom", (nickname) => {
-                setMy(nickname)
+            socket.on("joinRoom", () => {
                 socket.on("matched", () => {
                     console.log("상대방 매치")
                     setMatch(true)
@@ -99,7 +98,36 @@ const ChatingComponent = React.memo(()=> {
                 console.log("상대방 떠남")
                 setMatch(false)
             }) 
-    }, [])
+    }, []) */
+    useEffect(()=>{
+            // 소켓 연결
+            socket.on("connect", () => {
+                console.log("connect");
+            });
+
+            socket.on("disconnect", () => {
+                window.location.href="/chating"
+            });
+            // 조인 룸
+            socket.on("joinRoom", () => {
+                socket.on("matched", () => {
+                    console.log("상대방 매치")
+                    setMatch(true)
+                })
+            })
+            socket.on("matched", () => {
+                console.log("상대방 매치")
+                setMatch(true)
+            })
+            socket.on("leaveRoom",()=>{
+                console.log("상대방 떠남")
+                setMatch(false)
+                setOutModal(true)
+                socket.emit("leaveRoom",()=>{
+                    console.log("leaveRoom");
+                })
+            }) 
+    },[])
 
     useEffect(() => {
         // 메세지 받기
@@ -116,6 +144,15 @@ const ChatingComponent = React.memo(()=> {
         ])
     },[msg])
 
+    const Search =()=>{
+        // 방 찾기  
+        socket.emit("search", () => {
+            console.log("search");
+        });
+        setOutModal(false)
+        setOut(false)
+    }
+
     return(
         <>
         { OutModal &&  
@@ -123,9 +160,11 @@ const ChatingComponent = React.memo(()=> {
                 <s.SmallModal>
                     <s.Alert>상대방이 나갔습니다.</s.Alert>
                     <s.MBtnCont>
-                        <s.MBtn>상대 찾기</s.MBtn>
+                        <s.MBtn
+                            onClick={Search}
+                        >상대 찾기</s.MBtn>
                         <s.MBtn onClick={()=>{
-                            history.push("/")
+                            window.location.href = "/"
                         }}>나가기</s.MBtn>
                     </s.MBtnCont>
                 </s.SmallModal>
@@ -148,7 +187,6 @@ const ChatingComponent = React.memo(()=> {
                             <div key={index}></div>
                             {e.id === 1 && e.chating !== "" &&
                                 <s.MyChat>
-                                    <p>{my}</p>
                                     <s.MyContainer>{e.chating}</s.MyContainer>
                                 </s.MyChat>
                             }
@@ -191,6 +229,12 @@ const ChatingComponent = React.memo(()=> {
                     ># 채팅종료</s.MenuBtn>
                     <s.MenuBtn onClick={ReportModalOn}># 신고하기</s.MenuBtn>
                     <s.MenuBtn># 파일전송</s.MenuBtn>
+                    {
+                        out &&                     
+                        <s.MenuBtn
+                            onClick={Search}
+                        ># 상대찾기</s.MenuBtn>
+                    }
                 </s.MenuBar>
             </s.InputContainer>
         </s.MainContainer>
