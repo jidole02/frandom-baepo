@@ -21,6 +21,7 @@ const socket = io("wss://sonchaegeon.shop", {
 });
 
 const ChatingComponent = React.memo(()=> {
+    const space = /\s/;
 
     const history = useHistory();
 
@@ -37,8 +38,6 @@ const ChatingComponent = React.memo(()=> {
     const [you,setYou] = useState("");
 
     const [match,setMatch] = useState(false)
-
-    const [find,setFind] = useState(false);
 
     const [file,setFile] = useState("");
 
@@ -104,7 +103,6 @@ const ChatingComponent = React.memo(()=> {
                 console.log("상대방 떠남")
                 setMatch(false)
                 setOutModal(true)
-                setFind(false)
                 socket.emit("leaveRoom",()=>{
                     console.log("leaveRoom");
                 })
@@ -150,7 +148,6 @@ const ChatingComponent = React.memo(()=> {
         });
         setOutModal(false)
         setChating([])
-        setFind(true)
     }
 
     useEffect(()=>{
@@ -226,12 +223,12 @@ const ChatingComponent = React.memo(()=> {
                     Chating.map((e,index) => {
                         return (
                             <div key={index} style={{width:"100%"}}>
-                            {e.id === 1 && e.chating !== "" &&
+                            {e.id === 1 && e.chating !== "" && !space.exec(e.chating) && 
                                 <s.MyChat>
                                     <s.MyContainer>{e.chating}</s.MyContainer>
                                 </s.MyChat>
                             }
-                            {e.id === 2 && e.chating !== "" &&
+                            {e.id === 2 && e.chating !== "" && !space.exec(e.chating) && 
                                 <s.YouChat>
                                     <p>{you}</p>
                                     <s.YouContainer>{e.chating}</s.YouContainer>
