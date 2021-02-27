@@ -104,6 +104,7 @@ export const Img = styled.img`
     width:30%;
     margin-top:6%;
     margin-left:35% ;
+    cursor: pointer;
 `
 
 export const MyChat = styled.div`

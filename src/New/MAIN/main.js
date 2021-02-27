@@ -19,7 +19,7 @@ export default function MainPage() {
                     <s.Btn
                         to=""
                         onClick={()=>{
-                            window.location.href="/chating"
+                            window.location.href = "/chating"
                         }}
                     >시작하기 {">"}</s.Btn>
                     <s.Btn

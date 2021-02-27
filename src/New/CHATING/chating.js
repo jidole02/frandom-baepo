@@ -131,6 +131,9 @@ const ChatingComponent = React.memo(()=> {
                 id:3
             }
         ])
+        setTimeout(()=>{
+            ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
+        },100)
     },[url])
 
     useEffect(()=>{
@@ -235,7 +238,13 @@ const ChatingComponent = React.memo(()=> {
                                 </s.YouChat>
                             }
                             {e.id === 3 && e.chating !=="" &&
-                                <s.Img src={e.chating} alt=""/>
+                                <s.Img 
+                                    src={e.chating} 
+                                    alt=""
+                                    onClick={()=>{
+                                        window.open(e.chating)
+                                    }}
+                                />
                             }
                             </div>
                         )

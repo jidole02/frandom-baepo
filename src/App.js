@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as s from './components/STYLECOMPONENT/publicStyle'
 import {BrowserRouter,Route} from 'react-router-dom'
 import GlobalStyled from './style/globalstyle'
