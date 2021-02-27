@@ -13,7 +13,7 @@ export default function Header() {
                 setLogin(true)
             }
         }
-    })
+    },[])
 
     const Logout =()=>{
         window.localStorage.setItem("token","");

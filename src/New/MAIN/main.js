@@ -1,6 +1,6 @@
 import * as s from './styles'
-import {ReactComponent as 일러스트} from '../../ASSETS/일러스트1.svg'
-import {ReactComponent as 일러스트2} from '../../ASSETS/일러스트2.svg'
+import {ReactComponent as 일러스트} from '../ASSETS/일러스트1.svg'
+import {ReactComponent as 일러스트2} from '../ASSETS/일러스트2.svg'
 
 export default function MainPage() {
     return(

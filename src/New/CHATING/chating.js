@@ -1,8 +1,8 @@
 import * as s from './styles'
 
-import {ReactComponent as 일러스트} from '../../ASSETS/일러스트1.svg'
+import {ReactComponent as 일러스트} from '../ASSETS/일러스트1.svg'
 
-import {ReactComponent as 일러스트2} from '../../ASSETS/일러스트2.svg'
+import {ReactComponent as 일러스트2} from '../ASSETS/일러스트2.svg'
 
 import { useHistory } from 'react-router'
 
@@ -67,38 +67,6 @@ const ChatingComponent = React.memo(()=> {
     const ReportModalOn=()=>{
         setRModalState(!RModalState)
     }
-
-/*     useEffect(() => {
-            // 소켓 연결
-            socket.on("connect", () => {
-                console.log("connect");
-                socket.emit("search");
-            });
-
-            socket.on("disconnect", () => {
-                window.location.href="/chating"
-            });
-            // 방 찾기  
-            socket.emit("search", () => {
-                console.log("search");
-            });
-
-            // 조인 룸
-            socket.on("joinRoom", () => {
-                socket.on("matched", () => {
-                    console.log("상대방 매치")
-                    setMatch(true)
-                })
-            })
-            socket.on("matched", () => {
-                console.log("상대방 매치")
-                setMatch(true)
-            })
-            socket.on("leaveRoom",()=>{
-                console.log("상대방 떠남")
-                setMatch(false)
-            }) 
-    }, []) */
     useEffect(()=>{
             // 소켓 연결
             socket.on("connect", () => {
@@ -106,21 +74,18 @@ const ChatingComponent = React.memo(()=> {
             });
 
             socket.on("disconnect", () => {
-                window.location.href="/chating"
+                console.log("disconnect")
             });
             // 조인 룸
             socket.on("joinRoom", () => {
                 socket.on("matched", () => {
-                    console.log("상대방 매치")
                     setMatch(true)
                 })
             })
             socket.on("matched", () => {
-                console.log("상대방 매치")
                 setMatch(true)
             })
             socket.on("leaveRoom",()=>{
-                console.log("상대방 떠남")
                 setMatch(false)
                 setOutModal(true)
                 socket.emit("leaveRoom",()=>{
@@ -151,6 +116,7 @@ const ChatingComponent = React.memo(()=> {
         });
         setOutModal(false)
         setOut(false)
+        setChating([])
     }
 
     return(
