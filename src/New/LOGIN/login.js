@@ -17,7 +17,6 @@ export default function LoginPage() {
             ...data,
             [name] : value
         })
-        console.log(data)
     }
     const SubInputValue =()=>{
         setToggle(true)
@@ -33,7 +32,7 @@ export default function LoginPage() {
             }
         }).then((e)=>{
             window.localStorage.setItem("token", e.data.accessToken)
-            history.push('/match')
+            history.push('/')
         }).catch((err)=>{
             window.alert(err.response.data.error.message)
             setToggle(false)
@@ -54,6 +53,7 @@ export default function LoginPage() {
                 placeholder="비밀번호를 입력하세요."
                 name="password"
                 onChange={Input}
+                type="password"
             />
             <s.Btn
                 onClick={SubInputValue}

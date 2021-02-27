@@ -19,7 +19,6 @@ export default function SignupPage() {
     const { password, email, name, age } = val;
 
     const InputFunc = (e) => {
-        console.log(val)
         const { value, name } = e.target;
         SetVal({
             ...val,
@@ -38,7 +37,7 @@ export default function SignupPage() {
                 "username": val.name, "email": val.email, "password": val.password, "age" : val.age, "gender" : val.male
             }
         }).then(()=>{
-            history.push('/nickname')
+            history.push('/login')
         }).catch((err)=>{
             window.alert(err.response.data.error.message)
             setToggle(false)
@@ -72,6 +71,7 @@ export default function SignupPage() {
                     name="password"
                     onChange={InputFunc}
                     value={password}
+                    type="password"
                 />
                 <s.Input
                     placeholder="사용할 닉네임을 입력하세요."
