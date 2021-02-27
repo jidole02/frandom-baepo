@@ -1,6 +1,15 @@
+import React, { useState } from 'react';
+import FirstPage from './components/FIRSTPAGE/firstPage' 
 import * as s from './components/STYLECOMPONENT/publicStyle'
-import {BrowserRouter,Route} from 'react-router-dom'
+import {BrowserRouter,Route, Switch} from 'react-router-dom'
+import NicknamePage from './components/PUBLIC/nicknamePage'
+import 미국 from './components/IMG/america.png'
+import 한국 from './components/IMG/korea.png'
+import 언어 from './components/IMG/language.png'
+import ChatingPage from './components/CHATINGPAGE/chatingPage'
 import GlobalStyled from './style/globalstyle'
+import SignUp from './components/SIGNUP/signup'
+import Match from './components/MATCH/match'
 import Header from './New/HEADER/header'
 import MainPage from './New/MAIN/main';
 import LoginPage from './New/LOGIN/login';
