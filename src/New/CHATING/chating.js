@@ -88,7 +88,7 @@ const ChatingComponent = React.memo(()=> {
             });
 
             socket.on("disconnect", () => {
-                window.location.href="/chating"
+                console.log("disconnect")
             });
             // 조인 룸
             socket.on("joinRoom", () => {
