@@ -59,7 +59,7 @@ export const MenuBar = styled.div`
 `
 
 export const MenuBtn = styled.button`
-    width:23%;
+    width:28%;
     height:45px;
     border-radius:24px;
     border:none;
@@ -101,8 +101,9 @@ export const ChatingContainer = styled.div`
 `
 
 export const Img = styled.img`
-    width:40%;
+    width:30%;
     margin-top:6%;
+    margin-left:35% ;
 `
 
 export const MyChat = styled.div`

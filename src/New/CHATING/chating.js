@@ -38,8 +38,6 @@ const ChatingComponent = React.memo(()=> {
 
     const [match,setMatch] = useState(false)
 
-    const [out,setOut] = useState(true);
-
     const [find,setFind] = useState(false);
 
     const [file,setFile] = useState("");
@@ -85,6 +83,7 @@ const ChatingComponent = React.memo(()=> {
             // 소켓 연결
             socket.on("connect", () => {
                 console.log("connect");
+                socket.emit("search")
             });
 
             socket.on("disconnect", () => {
@@ -147,7 +146,6 @@ const ChatingComponent = React.memo(()=> {
             console.log("search");
         });
         setOutModal(false)
-        setOut(false)
         setChating([])
         setFind(true)
     }
@@ -219,8 +217,7 @@ const ChatingComponent = React.memo(()=> {
         </s.SvgContainer>
         <s.MainContainer>
             <s.ChatingContainer ref={ChatingDiv}>
-                {find ? <b>상대방을 찾고 있습니다...</b>
-                : <b>상대 찾기 버튼으로 상대를 찾아보세요!!</b>}
+                <b>상대방을 찾고 있습니다...</b>
                 {match && <b>상대방이 매치되었습니다.</b>}
                 {
                     Chating.map((e,index) => {
@@ -280,13 +277,13 @@ const ChatingComponent = React.memo(()=> {
                             document.all.file.click();
                         }}
                     ># 파일전송</s.MenuBtn>
-                    {
+{/*                     {
                         out &&                     
                         <s.MenuBtn
                             onClick={Search}
                             style={{backgroundColor:"tomato", color:"white"}}
                         ># 상대찾기</s.MenuBtn>
-                    }
+                    } */}
                 </s.MenuBar>
             </s.InputContainer>
         </s.MainContainer>
