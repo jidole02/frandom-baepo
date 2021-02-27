@@ -55,7 +55,7 @@ export const MenuBar = styled.div`
     width:60%;
     display:flex;
     justify-content:space-between;
-    margin-top:5%;
+    margin-top:0%;
 `
 
 export const MenuBtn = styled.button`

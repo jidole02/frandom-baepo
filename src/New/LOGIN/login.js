@@ -33,6 +33,21 @@ export default function LoginPage() {
         }).then((e)=>{
             window.localStorage.setItem("token", e.data.accessToken)
             history.push('/')
+            setTimeout(()=>{
+                axios({
+                  method:"get",
+                  url:"https://sonchaegeon.shop/v1/auth/refresh",
+                  headers:{
+                    "Content-type":"application/json", 
+                    "x-refresh-token":"Bearer " + e.data.refreshToken
+                  },
+                  data:{}
+                }).then((e)=>{
+                    console.log(e)
+                }).catch((e)=>{
+                    console.log(e)
+                })
+              },7200000)
         }).catch((err)=>{
             window.alert(err.response.data.error.message)
             setToggle(false)

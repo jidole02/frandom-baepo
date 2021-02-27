@@ -8,12 +8,12 @@ export default function Header() {
     const history = useHistory();
     const [login, setLogin] = useState(false);
     useEffect(()=>{
-        if(window.localStorage.getItem("token") !== null){
+        if([window.localStorage.getItem("token")] !== null || [window.localStorage.getItem("token")] !== ""){
             if(window.localStorage.getItem("token").length > 1){
                 setLogin(true)
             }
         }
-    },[])
+    },[window.localStorage.getItem("token")])
 
     const Logout =()=>{
         window.localStorage.setItem("token","");

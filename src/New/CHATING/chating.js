@@ -1,8 +1,8 @@
 import * as s from './styles'
 
-import {ReactComponent as 일러스트} from '../ASSETS/일러스트1.svg'
+import {ReactComponent as Ill} from '../ASSETS/일러스트1.svg'
 
-import {ReactComponent as 일러스트2} from '../ASSETS/일러스트2.svg'
+import {ReactComponent as Ill2} from '../ASSETS/일러스트2.svg'
 
 import { useHistory } from 'react-router'
 
@@ -43,6 +43,8 @@ const ChatingComponent = React.memo(()=> {
     const [find,setFind] = useState(false);
 
     const [file,setFile] = useState("");
+
+    const [url,setUrl] = useState("");
  
     const ChatingDiv = useRef();
 
@@ -51,11 +53,11 @@ const ChatingComponent = React.memo(()=> {
     }
 
     useEffect(()=>{
-        if(window.localStorage.getItem("token").length < 1){
+        if(window.localStorage.getItem("token").length < 10 ){    
             alert("로그인 후 이용해주세요!")
             history.push("/")
         }
-    },[])
+    },[history])
 
     const Send = (e) => {
         e.preventDefault();
@@ -72,6 +74,10 @@ const ChatingComponent = React.memo(()=> {
     },[Chating])
 
     const ReportModalOn=()=>{
+        if(!match){
+            alert("상대방이 없습니다")
+            return;
+        }
         setRModalState(!RModalState)
     }
 
@@ -108,13 +114,25 @@ const ChatingComponent = React.memo(()=> {
 
     useEffect(() => {
         // 메세지 받기
-        socket.on("receiveMessage", (e,name,url) => {
+        socket.on("receiveMessage", (e,name) => {
             setYou(name)
             setMsg(e)
-            console.log(e)
-            console.log(url)
+        })
+
+        socket.on("fileUpload",(res)=>{
+            setUrl(res.url)
         })
     }, [])
+
+    useEffect(()=>{
+        setChating([
+            ...Chating,
+            {
+                chating:url,
+                id:3
+            }
+        ])
+    },[url])
 
     useEffect(()=>{
         setChating([
@@ -145,6 +163,10 @@ const ChatingComponent = React.memo(()=> {
     },[file])
 
     const upload =(e)=>{
+        if(!match){
+            alert("상대방이 없습니다")
+            return;
+        }
         const fd = new FormData();
         setFile(URL.createObjectURL(e.target.files[0]))
         console.log(URL.createObjectURL(e.target.files[0]))
@@ -159,7 +181,7 @@ const ChatingComponent = React.memo(()=> {
             },
             data:fd
         }).then((e)=>{
-            console.log(e)
+            socket.emit("fileUpload",{url:e.data.url})
         }).catch((e)=>{
             console.log(e)
         })
@@ -192,8 +214,8 @@ const ChatingComponent = React.memo(()=> {
         { RModalState && <ReportModal event={ReportModalOn}></ReportModal> }
 
         <s.SvgContainer>
-            <일러스트/>
-            <일러스트2/>
+            <Ill/>
+            <Ill2/>
         </s.SvgContainer>
         <s.MainContainer>
             <s.ChatingContainer ref={ChatingDiv}>
@@ -201,10 +223,9 @@ const ChatingComponent = React.memo(()=> {
                 : <b>상대 찾기 버튼으로 상대를 찾아보세요!!</b>}
                 {match && <b>상대방이 매치되었습니다.</b>}
                 {
-                    Chating.map((e,index)=>{
+                    Chating.map((e,index) => {
                         return (
-                            <>
-                            <div key={index}></div>
+                            <div key={index} style={{width:"100%"}}>
                             {e.id === 1 && e.chating !== "" &&
                                 <s.MyChat>
                                     <s.MyContainer>{e.chating}</s.MyContainer>
@@ -219,7 +240,7 @@ const ChatingComponent = React.memo(()=> {
                             {e.id === 3 && e.chating !=="" &&
                                 <s.Img src={e.chating} alt=""/>
                             }
-                            </>
+                            </div>
                         )
                     })
                 }
