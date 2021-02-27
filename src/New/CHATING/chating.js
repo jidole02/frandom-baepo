@@ -12,6 +12,8 @@ import { io } from "socket.io-client";
 
 import ReportModal from './reportModal'
 
+import axios from 'axios'
+
 const socket = io("wss://sonchaegeon.shop", {
     query: {
         token: "Bearer " + window.localStorage.getItem("token")
@@ -19,6 +21,7 @@ const socket = io("wss://sonchaegeon.shop", {
 });
 
 const ChatingComponent = React.memo(()=> {
+
     const history = useHistory();
 
     const [data, setData] = useState("");
@@ -36,6 +39,10 @@ const ChatingComponent = React.memo(()=> {
     const [match,setMatch] = useState(false)
 
     const [out,setOut] = useState(true);
+
+    const [find,setFind] = useState(false);
+
+    const [file,setFile] = useState("");
  
     const ChatingDiv = useRef();
 
@@ -68,37 +75,6 @@ const ChatingComponent = React.memo(()=> {
         setRModalState(!RModalState)
     }
 
-/*     useEffect(() => {
-            // 소켓 연결
-            socket.on("connect", () => {
-                console.log("connect");
-                socket.emit("search");
-            });
-
-            socket.on("disconnect", () => {
-                window.location.href="/chating"
-            });
-            // 방 찾기  
-            socket.emit("search", () => {
-                console.log("search");
-            });
-
-            // 조인 룸
-            socket.on("joinRoom", () => {
-                socket.on("matched", () => {
-                    console.log("상대방 매치")
-                    setMatch(true)
-                })
-            })
-            socket.on("matched", () => {
-                console.log("상대방 매치")
-                setMatch(true)
-            })
-            socket.on("leaveRoom",()=>{
-                console.log("상대방 떠남")
-                setMatch(false)
-            }) 
-    }, []) */
     useEffect(()=>{
             // 소켓 연결
             socket.on("connect", () => {
@@ -123,6 +99,7 @@ const ChatingComponent = React.memo(()=> {
                 console.log("상대방 떠남")
                 setMatch(false)
                 setOutModal(true)
+                setFind(false)
                 socket.emit("leaveRoom",()=>{
                     console.log("leaveRoom");
                 })
@@ -131,9 +108,11 @@ const ChatingComponent = React.memo(()=> {
 
     useEffect(() => {
         // 메세지 받기
-        socket.on("receiveMessage", (e,name) => {
+        socket.on("receiveMessage", (e,name,url) => {
             setYou(name)
             setMsg(e)
+            console.log(e)
+            console.log(url)
         })
     }, [])
 
@@ -152,6 +131,45 @@ const ChatingComponent = React.memo(()=> {
         setOutModal(false)
         setOut(false)
         setChating([])
+        setFind(true)
+    }
+
+    useEffect(()=>{
+        setChating([
+            ...Chating,
+            {
+                chating:file,
+                id:3
+            }
+        ])
+    },[file])
+
+    const upload =(e)=>{
+        const fd = new FormData();
+        setFile(URL.createObjectURL(e.target.files[0]))
+        console.log(URL.createObjectURL(e.target.files[0]))
+        fd.append("file",e.target.files[0]);
+
+        axios({
+            method:"post",
+            url:"https://sonchaegeon.shop/v1/file",
+            headers:{
+                "Content-type":"multipart/form-data", 
+                "Authorization":"Bearer " + window.localStorage.getItem("token")
+            },
+            data:fd
+        }).then((e)=>{
+            console.log(e)
+        }).catch((e)=>{
+            console.log(e)
+        })
+
+        setTimeout(()=>{
+            ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
+        },100)
+        setTimeout(()=>{
+            setFile("")
+        },1000)
     }
 
     return(
@@ -179,7 +197,8 @@ const ChatingComponent = React.memo(()=> {
         </s.SvgContainer>
         <s.MainContainer>
             <s.ChatingContainer ref={ChatingDiv}>
-                <b>상대방을 찾고 있습니다...</b>
+                {find ? <b>상대방을 찾고 있습니다...</b>
+                : <b>상대 찾기 버튼으로 상대를 찾아보세요!!</b>}
                 {match && <b>상대방이 매치되었습니다.</b>}
                 {
                     Chating.map((e,index)=>{
@@ -196,6 +215,9 @@ const ChatingComponent = React.memo(()=> {
                                     <p>{you}</p>
                                     <s.YouContainer>{e.chating}</s.YouContainer>
                                 </s.YouChat>
+                            }
+                            {e.id === 3 && e.chating !=="" &&
+                                <s.Img src={e.chating} alt=""/>
                             }
                             </>
                         )
@@ -222,6 +244,9 @@ const ChatingComponent = React.memo(()=> {
                         />
                     </form>
                 }
+                <form onChange={upload} action="upload" id="uploadForm" method="post" encType="multipart/form-data">
+                        <input type="file" name="file" id="file" style={{display:"none"}}/>
+                </form>
                 <s.MenuBar>
                     <s.MenuBtn
                         onClick={()=>{
@@ -229,11 +254,16 @@ const ChatingComponent = React.memo(()=> {
                         }}
                     ># 채팅종료</s.MenuBtn>
                     <s.MenuBtn onClick={ReportModalOn}># 신고하기</s.MenuBtn>
-                    <s.MenuBtn># 파일전송</s.MenuBtn>
+                    <s.MenuBtn
+                        onClick={()=>{
+                            document.all.file.click();
+                        }}
+                    ># 파일전송</s.MenuBtn>
                     {
                         out &&                     
                         <s.MenuBtn
                             onClick={Search}
+                            style={{backgroundColor:"tomato", color:"white"}}
                         ># 상대찾기</s.MenuBtn>
                     }
                 </s.MenuBar>

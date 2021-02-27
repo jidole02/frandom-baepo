@@ -17,7 +17,10 @@ export default function MainPage() {
                 <s.SubIntro>랜덤채팅을 통해 다른 사람과 대화를 나누어 보세요!</s.SubIntro>
                 <s.BtnContainer>
                     <s.Btn
-                        to="/chating"
+                        to="/"
+                        onClick={()=>{
+                            window.location.href="/chating"
+                        }}
                     >시작하기 {">"}</s.Btn>
                     <s.Btn
                         to="/signup"

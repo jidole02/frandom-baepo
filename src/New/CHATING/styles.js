@@ -100,6 +100,11 @@ export const ChatingContainer = styled.div`
     }
 `
 
+export const Img = styled.img`
+    width:40%;
+    margin-top:6%;
+`
+
 export const MyChat = styled.div`
     position:relative;
     width:100%;
