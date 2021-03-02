@@ -54,7 +54,9 @@ const ChatingComponent = React.memo(()=> {
     }
 
     useEffect(()=>{
-        if(window.localStorage.getItem("token").length < 10 ){    
+        if(window.localStorage.getItem("token").length < 10 || 
+        window.localStorage.getItem("token") !== "undefined" || 
+        window.localStorage.getItem("token") != undefined){    
             alert("로그인 후 이용해주세요!")
             history.push("/")
         }
