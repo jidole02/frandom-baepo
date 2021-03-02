@@ -25,8 +25,8 @@ export default function Header() {
         {login ? 
         // 로그인 됬을 때는
             <>
-            <s.Section style={menu ? {marginTop:"8vh"}
-            :{marginTop:"-8vh"}}>
+            <s.Section style={menu ? {marginTop:"7vh"}
+            :{marginTop:"-10vh"}}>
                     <s.Menu 
                         to="/login"
                     ></s.Menu>
@@ -66,8 +66,8 @@ export default function Header() {
             :
             // 로그인 안됬을 때는
             <>
-            <s.Section style={menu ? {marginTop:"8vh"}
-            :{marginTop:"-8vh"}}>
+            <s.Section style={menu ? {marginTop:"7vh"}
+            :{marginTop:"-10vh"}}>
                     <s.Menu 
                         to="/login"
                         style={{marginTop:"10px"}}
