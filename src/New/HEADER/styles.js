@@ -10,46 +10,16 @@ export const HeaderContainer = styled.header`
     justify-content:space-between;
     z-index:300;
     position:absolute;
-    i{
-        display:none;
-    }
-    @media screen and (max-width:360px){
+    @media screen and (max-width:768px){
         width:90%;
-        height:3%;
-        display:flex;  
-        box-shadow:0px 3px 10px rgb(10,10,10,0.1); 
         background-color:${mainColor};
-        padding:15px 5%;
-        p{
-            display:none;
-        }
-        ul{
-            display:none;
-        }
-        i{
-            display:block;
-            color:white;
-        }
-    }
-`
-
-export const Section = styled.section`
-    display:none;
-    width:100%;
-    position:absolute;
-    z-index:300;
-    background-color:white;
-    box-shadow:5px 0px 10px rgb(10,10,10,0.1);
-    padding:2% 0;
-    flex-direction:column;
-    align-items:center;
-    justify-content:space-between;
-    margin-top:-9vh;
-    transition:1s;
-    @media screen and (max-width:360px){
         display:flex;
+        flex-direction:column;
+        ul{
+            flex-direction:column;
+        }
     }
-`
+`   
 
 export const HeaderTitle = styled.p`
     color:black;
@@ -61,13 +31,39 @@ export const HeaderTitle = styled.p`
     b{
         color:${mainColor};
     }
+    @media screen and (max-width:768px){
+        display:none;
+    }
+`
+
+export const MediaHeader = styled.div`
+    width:100%;
+    display:none;
+    @media screen and (max-width:768px){
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+    i{
+        color:#C2E2F8;
+        :first-of-type{
+            padding: 0 6px;
+        }
+    }
+    p{
+        color:white;
+        font-weight:bold;
+    }
 `
 
 export const MenuBar = styled.ul`
     width:20%;
     display:flex;
     justify-content:space-between;
-    color:white;
+    @media screen and (max-width:768px){
+        width:100%;
+        margin-top:20px;
+    }
 `
 
 export const Menu = styled(NavLink)`
@@ -75,8 +71,17 @@ export const Menu = styled(NavLink)`
     color:black;
     font-family:나눔스퀘어;
     font-size:1.8vmin;
-    @media screen and (max-width:360px){
-        color:gray;
-        font-size:14px;
+    @media screen and (max-width:768px){
+        margin-top:10px;
+        color:white;
+        width:100%;
+        font-size:12px;
+        font-weight:bold;
+        display:flex;
+        justify-content:center;
+        padding: 8px 0;
+        :first-of-type{
+            margin-top:0;
+        }
     }
 `
