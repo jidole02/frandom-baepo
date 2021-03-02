@@ -14,7 +14,7 @@ export const SvgContainer = styled.div`
         width:14%;
     }
     z-index:300;
-    @media screen and (max-width:360px){
+    @media screen and (max-width:768px){
         svg{
             display:none;
         }
@@ -114,7 +114,8 @@ export const ChatingContainer = styled.div`
         font-size:1.3vmin;
         margin-top:5%;
     }
-    @media screen and (max-width:360px){
+    @media screen and (max-width:768px){
+        width:80%;
         ::-webkit-scrollbar{
             display:none;
         }
@@ -126,6 +127,10 @@ export const Img = styled.img`
     margin-top:6%;
     margin-left:35% ;
     cursor: pointer;
+    @media screen and (max-width:768px){
+        width:60%;
+        margin-left:25%;
+    }
 `
 
 export const MyChat = styled.div`
@@ -198,12 +203,21 @@ export const SmallModal = styled.div`
     justify-content:center;
     align-items:center;
     flex-direction:column;
+    @media screen and (max-width:768px){
+        width:80%;
+        margin-top:-5%;
+    }
 `
 
 export const Alert = styled.p`
     font-size:2.8vmin;
     color:${mainColor};
     font-weight:800;
+    @media screen and (max-width:768px){
+        font-size:17px;
+        font-weight:bold;
+        font-family:나눔스퀘어;
+    }
 `
 
 export const MBtnCont = styled.div`
@@ -235,12 +249,14 @@ export const Report = styled.div`
     width:30%;
     height:40%;
     background-color:white;
-    background-color:white;
     border-radius:5px;
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
+    @media screen and (max-width:768px){
+        width:300px;
+    }
 `
 
 export const Hr = styled.hr`
