@@ -97,7 +97,7 @@ export default function SignupPage() {
                 </s.Select>
                 <s.Btn
                     onClick={SignUpFunc}
-                >SIGNUP</s.Btn>
+                >회원가입</s.Btn>
             </s.SignupContainer>
         </>
     )

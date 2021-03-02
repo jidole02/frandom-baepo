@@ -83,6 +83,7 @@ const ChatingComponent = React.memo(()=> {
     }
 
     useEffect(()=>{
+
             // 소켓 연결
             socket.on("connect", () => {
                 console.log("connect");
@@ -133,11 +134,11 @@ const ChatingComponent = React.memo(()=> {
                 id:3
             }
         ])
-        if(window.localStorage.getItem("token") != undefined){
+/*         if(window.localStorage.getItem("token") != undefined){
             setTimeout(()=>{
                 ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
             },100)
-        }
+        } */
     },[url])
 
     useEffect(()=>{
