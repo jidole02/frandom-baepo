@@ -10,6 +10,45 @@ export const HeaderContainer = styled.header`
     justify-content:space-between;
     z-index:300;
     position:absolute;
+    i{
+        display:none;
+    }
+    @media screen and (max-width:360px){
+        width:90%;
+        height:3%;
+        display:flex;  
+        box-shadow:0px 3px 10px rgb(10,10,10,0.1); 
+        background-color:${mainColor};
+        padding:15px 5%;
+        p{
+            display:none;
+        }
+        ul{
+            display:none;
+        }
+        i{
+            display:block;
+            color:white;
+        }
+    }
+`
+
+export const Section = styled.section`
+    display:none;
+    width:100%;
+    position:absolute;
+    z-index:300;
+    background-color:white;
+    box-shadow:5px 0px 10px rgb(10,10,10,0.1);
+    padding:2% 0;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:-9vh;
+    transition:1s;
+    @media screen and (max-width:360px){
+        display:flex;
+    }
 `
 
 export const HeaderTitle = styled.p`
@@ -28,6 +67,7 @@ export const MenuBar = styled.ul`
     width:20%;
     display:flex;
     justify-content:space-between;
+    color:white;
 `
 
 export const Menu = styled(NavLink)`
@@ -35,4 +75,8 @@ export const Menu = styled(NavLink)`
     color:black;
     font-family:나눔스퀘어;
     font-size:1.8vmin;
+    @media screen and (max-width:360px){
+        color:gray;
+        font-size:14px;
+    }
 `

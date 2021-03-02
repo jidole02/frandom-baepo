@@ -133,9 +133,11 @@ const ChatingComponent = React.memo(()=> {
                 id:3
             }
         ])
-        setTimeout(()=>{
-            ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
-        },100)
+        if(window.localStorage.getItem("token") != undefined){
+            setTimeout(()=>{
+                ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
+            },100)
+        }
     },[url])
 
     useEffect(()=>{

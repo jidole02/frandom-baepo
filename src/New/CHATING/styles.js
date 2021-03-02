@@ -14,6 +14,11 @@ export const SvgContainer = styled.div`
         width:14%;
     }
     z-index:300;
+    @media screen and (max-width:360px){
+        svg{
+            display:none;
+        }
+    }
 `
 
 export const MainContainer = styled.div`
@@ -97,6 +102,11 @@ export const ChatingContainer = styled.div`
         color:gray;
         font-size:1.3vmin;
         margin-top:5%;
+    }
+    @media screen and (max-width:360px){
+        ::-webkit-scrollbar{
+            display:none;
+        }
     }
 `
 

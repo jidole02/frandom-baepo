@@ -7,8 +7,9 @@ export default function Header() {
     const LinkStyle = {borderBottom:`4px solid ${mainColor}`}
     const history = useHistory();
     const [login, setLogin] = useState(false);
+    const [menu,setMenu] = useState(false);
     useEffect(()=>{
-        if([window.localStorage.getItem("token")] !== null || [window.localStorage.getItem("token")] !== ""){
+        if(window.localStorage.getItem("token") != undefined && window.localStorage.getItem("token")!==""){
             if(window.localStorage.getItem("token").length > 1){
                 setLogin(true)
             }
@@ -22,8 +23,27 @@ export default function Header() {
     return(
         <>
         {login ? 
-            // 로그인 됬을 때는
+        // 로그인 됬을 때는
+            <>
+            <s.Section style={menu ? {marginTop:"8vh"}
+            :{marginTop:"-8vh"}}>
+                    <s.Menu 
+                        to="/login"
+                    ></s.Menu>
+                    <s.Menu 
+                        to="/"
+                        onClick={Logout}
+                    >로그아웃</s.Menu>
+                    <s.Menu 
+                        to="/chating"
+                    >시작하기</s.Menu>
+            </s.Section>
             <s.HeaderContainer>
+                <i className="fas fa-bars"
+                    onClick={()=>{
+                        setMenu(!menu)
+                    }}
+                ></i>
                 <s.HeaderTitle
                     onClick={()=>{history.push('/')}}
                 ><b>F</b>RANDOM</s.HeaderTitle>
@@ -42,12 +62,33 @@ export default function Header() {
                     >시작하기</s.Menu>
                 </s.MenuBar>
             </s.HeaderContainer>
+            </>
             :
             // 로그인 안됬을 때는
+            <>
+            <s.Section style={menu ? {marginTop:"8vh"}
+            :{marginTop:"-8vh"}}>
+                    <s.Menu 
+                        to="/login"
+                        style={{marginTop:"10px"}}
+                    >로그인</s.Menu>
+                    <s.Menu 
+                        to="/"
+                        onClick={Logout}
+                    >로그아웃</s.Menu>
+                    <s.Menu 
+                        to="/chating"
+                    >시작하기</s.Menu>
+            </s.Section>
             <s.HeaderContainer>
             <s.HeaderTitle
                 onClick={()=>{history.push('/')}}
             ><b>F</b>RANDOM</s.HeaderTitle>
+            <i className="fas fa-bars"
+                onClick={()=>{
+                    setMenu(!menu)
+                }}
+            ></i>
             <s.MenuBar>
                 <s.Menu 
                     to="/login"
@@ -63,6 +104,7 @@ export default function Header() {
                 >시작하기</s.Menu>
             </s.MenuBar>
         </s.HeaderContainer>
+        </>
         }
         </>
     )

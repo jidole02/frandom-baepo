@@ -13,6 +13,9 @@ export const SvgContainer = styled.div`
     svg{
         width:22%;
     }
+    @media screen and (max-width:360px){
+        opacity:0;
+    }
 `
 
 export const MainContainer = styled.div`
