@@ -14,6 +14,7 @@ export default function MainPage() {
                     깔끔한 랜덤채팅, 청결한 랜덤채팅. <br/>
                     <b>FRANDOM</b>에서 만듭니다!
                 </s.IntroMent>
+                <s.MIntroMent>FRANDOM</s.MIntroMent>
                 <s.SubIntro>랜덤채팅을 통해 다른 사람과 대화를 나누어 보세요!</s.SubIntro>
                 <s.BtnContainer>
                     <s.Btn

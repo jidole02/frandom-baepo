@@ -13,7 +13,7 @@ export const SvgContainer = styled.div`
     svg{
         width:22%;
     }
-    @media screen and (max-width:360px){
+    @media screen and (max-width:768px){
         opacity:0;
     }
 `
@@ -38,20 +38,43 @@ export const IntroMent = styled.p`
     b{
         color:${mainColor};
     }
+    @media screen and (max-width:768px){
+        display:none;
+    }
+`
+
+export const MIntroMent = styled.b`
+    font-weight:bold;
+    font-size:30px;
+    color:${mainColor};
+    display:none;
+    @media screen and (max-width:768px){
+        display:block;
+    }
 `
 
 export const SubIntro = styled.p`
     color:#9B9B9B;
     font-size:1.8vmin;
     margin-top:2%;
+    @media screen and (max-width:768px){
+        display:none;
+    }
 `
 
 export const BtnContainer = styled.div`
     width:22%;
     height:6%;
     display:flex;
+    align-items:center;
     justify-content:space-between;
     margin-top:3%;
+    @media screen and (max-width:768px){
+        flex-direction:column;
+        width:80%;
+        height:20%;
+        margin-top:30px;
+    }
 `
 
 export const Btn = styled(Link)`
@@ -77,5 +100,12 @@ export const Btn = styled(Link)`
     }
     :hover{
         box-shadow:3px 3px 10px #CFCCFF;
+    }
+    @media screen and (max-width:768px){
+        width:180px;
+        height:50px;
+        margin-top:10px;
+        font-size:15px;
+        font-family:나눔스퀘어;
     }
 `
