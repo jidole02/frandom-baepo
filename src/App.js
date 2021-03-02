@@ -1,6 +1,6 @@
 import React from 'react';
 import * as s from './components/STYLECOMPONENT/publicStyle'
-import {BrowserRouter,Route} from 'react-router-dom'
+import {BrowserRouter as Router,Route} from 'react-router-dom'
 import GlobalStyled from './style/globalstyle'
 import Header from './New/HEADER/header'
 import MainPage from './New/MAIN/main';
@@ -10,7 +10,7 @@ import ChatingComponent from './New/CHATING/chating';
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
     <GlobalStyled></GlobalStyled>
     <s.Background>
       <Route path="/" component={Header}/>
@@ -19,7 +19,7 @@ function App() {
       <Route exact path="/signup" component={SignupPage}></Route>
       <Route exact path="/chating" component={ChatingComponent}></Route>
     </s.Background>
-    </BrowserRouter>
+    </Router>
   );
 }
 

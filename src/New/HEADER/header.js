@@ -18,9 +18,12 @@ export default function Header() {
             }
         }
     },[window.localStorage.getItem("token")])
+    
     const Logout =()=>{
+        setMenu(!menu)
+        setLogin(true)
         window.localStorage.setItem("token","");
-        window.location.href = "/"
+        window.location.reload()
     }
 
     useEffect(()=>{
@@ -53,7 +56,7 @@ export default function Header() {
                         }}></i>
                 </s.MediaHeader>
                 <s.MenuBar style={media && menu ? {display:"none"} : {display:"flex"}}>
-                    {login ? 
+                    {login && 
                     <>
                         <s.Menu 
                             to="/login"
@@ -61,15 +64,16 @@ export default function Header() {
                             activeStyle={LinkStyle}
                         ></s.Menu>
                         <s.Menu 
+                            to=""
                             onClick={Logout}
-                            onClick={closeHeader}
                         >로그아웃</s.Menu>
                         <s.Menu 
                             to="/chating"
                         >시작하기</s.Menu>
                     </>
-                    :
-                    <>
+                    }
+                    {!login && 
+                        <>
                         <s.Menu 
                             to="/login"
                             activeStyle={LinkStyle}
@@ -84,7 +88,7 @@ export default function Header() {
                             to="/chating"
                             onClick={closeHeader}
                         >시작하기</s.Menu>
-                    </>
+                        </>
                     }
                 </s.MenuBar>
             </s.HeaderContainer>

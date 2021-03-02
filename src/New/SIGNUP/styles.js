@@ -14,6 +14,10 @@ export const Signup = styled.p`
     color:${mainColor};
     font-weight:bold;
     font-size:4vmin;
+    @media screen and (max-width:768px){
+        font-size:25px;
+        margin-bottom:10px;
+    }
 `
 
 export const Description = styled.p`
@@ -21,6 +25,9 @@ export const Description = styled.p`
     font-size:1.5vmin;
     margin-top:1.5%;
     margin-bottom:0.5%;
+    @media screen and (max-width:768px){
+        display:none;
+    }
 `
 
 export const Input = styled.input`
@@ -33,6 +40,13 @@ export const Input = styled.input`
     border-radius:5px;
     padding:0 1%;
     font-size:1.4vmin;
+    @media screen and (max-width:768px){
+        width:250px;
+        font-size:14px;
+        padding: 0 10px;
+        margin-top:3%;
+        height:50px;
+    }
 `
 
 export const Btn = styled.button`
@@ -45,6 +59,13 @@ export const Btn = styled.button`
     color:white;
     font-size:2vmin;
     font-weight:bold;
+    @media screen and (max-width:768px){
+        width:270px;
+        font-size:14px;
+        padding: 0 10px;
+        margin-top:3%;
+        height:50px;
+    }
 `
 
 export const Select = styled.select`
@@ -58,4 +79,11 @@ export const Select = styled.select`
     padding:0 1%;
     font-size:1.4vmin;
     outline:none;
+    @media screen and (max-width:768px){
+        width:270px;
+        font-size:14px;
+        padding: 0 10px;
+        margin-top:3%;
+        height:50px;
+    }
 `

@@ -43,6 +43,9 @@ export const InputContainer = styled.div`
         width:100%;
         height:30%;
     }
+    @media screen and (max-width:768px){
+        width:80%;
+    }
 `
 
 export const Input = styled.input`
@@ -61,6 +64,10 @@ export const MenuBar = styled.div`
     display:flex;
     justify-content:space-between;
     margin-top:0%;
+    @media screen and (max-width:768px){
+        width:90%;
+        margin-top:-5%;
+    }
 `
 
 export const MenuBtn = styled.button`
@@ -79,6 +86,10 @@ export const MenuBtn = styled.button`
     }
     :hover{
         box-shadow:3px 3px 10px #CFCCFF;
+    }
+    @media screen and (max-width:768px){
+        width:30%;
+        font-size:12px;
     }
 `
 
