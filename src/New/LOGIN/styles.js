@@ -15,6 +15,9 @@ export const Login = styled.p`
     color:${mainColor};
     font-weight:bold;
     font-size:4vmin;
+    @media screen and (max-width:768px){
+        font-size:30px;
+    }
 `
 
 export const Description = styled.p`
@@ -22,6 +25,9 @@ export const Description = styled.p`
     font-size:1.5vmin;
     margin-top:1.5%;
     margin-bottom:0.5%;
+    @media screen and (max-width:768px){
+        opacity:0;
+    }
 `
 
 export const Input = styled.input`
@@ -34,6 +40,13 @@ export const Input = styled.input`
     border-radius:5px;
     padding:0 1%;
     font-size:1.4vmin;
+    @media screen and (max-width:768px){
+        width:250px;
+        font-size:14px;
+        padding: 0 10px;
+        margin-top:10px;
+        height:50px;
+    }
 `
 
 export const Btn = styled.button`
@@ -46,6 +59,13 @@ export const Btn = styled.button`
     color:white;
     font-size:2vmin;
     font-weight:bold;
+    @media screen and (max-width:768px){
+        width:270px;
+        margin-top:20px;
+        font-size:18px;
+        font-family:나눔스퀘어;
+        font-weight:bold;
+    }
 `
 
 export const NotAccount = styled(Link)`
@@ -53,4 +73,8 @@ export const NotAccount = styled(Link)`
     font-size:1.3vmin;
     margin-top:4%;
     cursor: pointer;
+    @media screen and (max-width:768px){
+        margin-top:40px;
+        font-size:13px;
+    }
 `

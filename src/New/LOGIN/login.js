@@ -72,7 +72,7 @@ export default function LoginPage() {
             />
             <s.Btn
                 onClick={SubInputValue}
-            >LOGIN</s.Btn>
+            >로그인</s.Btn>
             <s.NotAccount to="/signup">계정이 없으신가요?</s.NotAccount>
         </s.LoginContainer>
         </>
