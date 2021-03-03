@@ -35,7 +35,7 @@ export default function Header() {
                 setMedia(false)
             }
         },500)
-    })
+    },[])
     
     const closeHeader =()=>{
         setMenu(!menu)
