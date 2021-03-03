@@ -57,7 +57,7 @@ export const MediaHeader = styled.div`
 `
 
 export const MenuBar = styled.ul`
-    width:20%;
+    width:400px;
     display:flex;
     justify-content:space-between;
     @media screen and (max-width:768px){

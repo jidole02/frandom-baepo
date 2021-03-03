@@ -54,13 +54,17 @@ const ChatingComponent = React.memo(()=> {
     }
 
     useEffect(()=>{
-        if(window.localStorage.getItem("token") != undefined){ 
-            if(window.localStorage.getItem("token").length < 10){    
+        if(window.localStorage.getItem("token") == undefined){ 
             alert("로그인 후 이용해주세요!")
             history.push("/")
+        }
+        if(window.localStorage.getItem("token") != undefined){ 
+            if(window.localStorage.getItem("token").length < 10){    
+                alert("로그인 후 이용해주세요!")
+                history.push("/")
             }
         }
-    },[history])
+    },[])
 
     const Send = (e) => {
         e.preventDefault();

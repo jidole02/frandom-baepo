@@ -63,13 +63,14 @@ export const SubIntro = styled.p`
 `
 
 export const BtnContainer = styled.div`
-    width:22%;
+    width:24%;
     height:6%;
     display:flex;
     align-items:center;
     justify-content:space-between;
     margin-top:3%;
     @media screen and (max-width:768px){
+        justify-content:flex-start;
         flex-direction:column;
         width:80%;
         height:20%;
