@@ -16,9 +16,9 @@ import axios from 'axios'
 
 const socket = io("wss://sonchaegeon.shop", {
     query: {
-        token: "Bearer " + window.localStorage.getItem("token")
+        token: "Bearer " + window.localStorage.getItem("token") 
     }
-});
+})
 
 const ChatingComponent = React.memo(()=> {
 

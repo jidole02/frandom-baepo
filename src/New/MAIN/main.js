@@ -1,22 +1,8 @@
 import * as s from './styles'
 import {ReactComponent as Ill} from '../ASSETS/일러스트1.svg'
 import {ReactComponent as Ill2} from '../ASSETS/일러스트2.svg'
-import {useState,useEffect} from 'react'
 
 export default function MainPage() {
-    
-    const [media,setMedia] = useState(false);
-
-    useEffect(()=>{
-        setInterval(()=>{
-            if(window.innerWidth < 768){
-                setMedia(true);
-            }
-            else{
-                setMedia(false)
-            }
-        },500)
-    },[])
     return(
         <>
             <s.SvgContainer>

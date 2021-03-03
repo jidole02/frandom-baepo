@@ -43,11 +43,10 @@ export default function LoginPage() {
                   },
                   data:{}
                 }).then((e)=>{
-                    console.log(e)
-                }).catch((e)=>{
-                    console.log(e)
+                    window.localStorage.setItem("RToken",e.data.accessToken)
+                    window.localStorage.setItem("token", e.data.accessToken)
                 })
-              },7200000)
+            },7200000)
         }).catch((err)=>{
             window.alert(err.response.data.error.message)
             setToggle(false)
