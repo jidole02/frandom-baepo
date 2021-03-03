@@ -41,7 +41,7 @@ export default function MainPage() {
                         to="/signup"
                     >회원가입 {">"}</s.Btn>
                 </s.BtnContainer>
-                {media && <div id='mobonDivBanner_514776'><iframe name='ifrad' id='mobonIframe_514776' src='//www.mediacategory.com/servlet/adBanner?from="+escape(document.referrer)+"&s=514776&igb=75&iwh=640_107&cntad=1&cntsr=3' frameBorder='0' scrolling='no' style={{height:"107px", width:"640px", marginTop:"8%"}}></iframe></div> }
+                <div id='mobonDivBanner_514776'><iframe name='ifrad' id='mobonIframe_514776' src='//www.mediacategory.com/servlet/adBanner?from="+escape(document.referrer)+"&s=514776&igb=75&iwh=640_107&cntad=1&cntsr=3' frameBorder='0' scrolling='no' style={{height:"107px", width:"640px"}}></iframe></div> 
             </s.MainContainer>
         </>
     )
