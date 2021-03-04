@@ -14,6 +14,7 @@ export const Profile = styled.img`
     width:350px;
     height:350px;
     border-radius:80%;
+    box-shadow:0px 0px 10px whitesmoke;
 `
 
 export const ProfileContainer = styled.div`

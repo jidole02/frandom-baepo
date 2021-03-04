@@ -114,6 +114,7 @@ const ChatingComponent = React.memo(()=> {
                 console.log("상대방 떠남")
                 setMatch(false)
                 setOutModal(true)
+                setRModalState(false);
                 socket.emit("leaveRoom",()=>{
                     console.log("leaveRoom");
                 })

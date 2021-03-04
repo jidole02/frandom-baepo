@@ -156,6 +156,7 @@ z-index:33;
 display:flex;
 justify-content:center;
 align-items:center;
+z-index:800;
 `
 
 export const LoadingBar = styled.div`

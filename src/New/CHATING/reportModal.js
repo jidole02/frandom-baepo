@@ -50,7 +50,7 @@ export default function ReportModal(e) {
                         value={reportData.title}
                     ></s.ReportInput>
                     <s.ReportInput
-                        placeholder="신고 제목을 입력해주세요."
+                        placeholder="신고 내용을 입력해주세요."
                         name="cause"
                         onChange={Report}
                         value={reportData.cause}
