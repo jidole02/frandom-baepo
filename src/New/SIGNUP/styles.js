@@ -49,6 +49,37 @@ export const Input = styled.input`
     }
 `
 
+export const AccessEmail = styled.div`
+    display:flex;
+    width:32%;
+    margin-left:12%;
+    align-items:center;
+    margin-top:0.7%;
+    input{
+        width:55%;
+        padding:0 4%;
+    }
+    :first-of-type{
+        margin-top:2%;
+    }
+    @media screen and (max-width:768px){
+        width:300px;
+        margin-right:20px;
+        }
+`
+
+export const SendBtn = styled.button`
+    height:43px;
+    background-color:${mainColor};
+    border:none;
+    border-radius:3px;
+    color:white;
+    font-size:1.5vmin;
+    margin-left:2%;
+    font-family:나눔스퀘어;
+    padding:0 3%;
+`
+
 export const Btn = styled.button`
     width:20%;
     height:55px;

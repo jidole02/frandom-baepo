@@ -3,6 +3,7 @@ import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import {useState} from 'react'
 import Loading from '../../components/PUBLIC/loading';
+import { useEffect } from 'react/cjs/react.development';
 
 export default function SignupPage() {
     const [val, SetVal] = useState({
@@ -10,13 +11,20 @@ export default function SignupPage() {
         email: '',
         name: '',
         age: '',
-        male:'M'
+        male:'M',
+        accessCode:""
     });
     const history = useHistory();
 
     const [toggle, setToggle] = useState(false)
 
-    const { password, email, name, age } = val;
+    const [checkEmail,setCheckEmail] = useState(false)
+
+    const [sendCheck,setSendCheck] = useState(false)
+
+    const { password, email, name, age, accessCode } = val;
+
+    let i = 0;
 
     const InputFunc = (e) => {
         const { value, name } = e.target;
@@ -26,6 +34,10 @@ export default function SignupPage() {
         })
     }
     const SignUpFunc = () => {
+        if(!checkEmail){
+            alert("인증번호를 입력하세요")
+            return;
+        }
         setToggle(true)
        axios({
             method:"post",
@@ -39,6 +51,7 @@ export default function SignupPage() {
         }).then(()=>{
             history.push('/login')
         }).catch((err)=>{
+            alert("회원가입에 실패했습니다.")
             window.alert(err.response.data.error.message)
             setToggle(false)
         }) 
@@ -54,18 +67,104 @@ export default function SignupPage() {
         }
     }
 
+    const timer =()=>{
+        if(i > 0)
+        setInterval(()=>{
+            i++;
+            if(i == 300){
+                alert("인증번호 인증 시간이 지났습니다.")
+                clearInterval();
+            }
+        },1000)
+    }
+
+    const SendEmail =()=>{
+        axios({
+            method:"post",
+            url:"https://sonchaegeon.shop/v1/auth/verify",
+            headers:{
+                "Content-type":"application/json"
+            },
+            data:{
+                "email" : email
+            }
+        }).then(()=>{
+            timer()
+            alert("인증번호를 발송했습니다.")
+            setSendCheck(true)
+        }).catch(()=>{
+            alert("이메일이 잘못됬습니다")
+        })
+    }
+
+    const CheckCode =()=>{
+        
+        axios({
+            method:"post",
+            url:"https://sonchaegeon.shop/v1/auth/check",
+            headers:{
+                "Content-type":"application/json"
+            },
+            data:{
+                "email" : email,
+                "verify": accessCode.toString()
+            }
+        }).then(()=>{
+            alert("인증번호가 확인되었습니다.")
+            setCheckEmail(true)
+        }).catch(()=>{
+            alert("인증번호가 틀렸습니다")
+        }) 
+    }
+
     return(
         <>
             {toggle && <Loading></Loading>}
             <s.SignupContainer>
                 <s.Signup>SIGNUP</s.Signup>
-                <s.Description>FRANDOM 회원가입을 환영합니다.</s.Description>
-                <s.Input
-                    placeholder="사용할 이메일을 입력하세요."
-                    name="email"
-                    onChange={InputFunc}
-                    value={email}
-                />
+                <s.AccessEmail>
+                    <s.Input
+                        placeholder="사용할 이메일을 입력하세요."
+                        name="email"
+                        onChange={InputFunc}
+                        value={email}
+                    />
+                <s.SendBtn
+                    onClick={SendEmail}
+                >인증번호 발송</s.SendBtn>
+                </s.AccessEmail>
+                <s.AccessEmail>
+                {sendCheck ? 
+                    <> {checkEmail ? 
+                        <>
+                            <s.Input
+                            onChange={InputFunc}
+                            readOnly
+                            />
+                            <s.SendBtn>✔ 인증됨</s.SendBtn>
+                        </>
+                        :
+                        <>
+                            <s.Input
+                            name="accessCode"
+                            onChange={InputFunc}
+                            placeholder="받은 인증번호를 입력하세요."
+                            />
+                            <s.SendBtn
+                            onClick={CheckCode}
+                            >확인하기</s.SendBtn>
+                        </>
+                        }
+                    </>
+                    :
+                    <s.Input
+                        style={{backgroundColor:"rgb(220,220,220)", border:"none"}}
+                        placeholder="인증번호를 발송해주세요"
+                        readOnly
+                    />
+
+                }
+                </s.AccessEmail>
                 <s.Input
                     placeholder="사용할 비밀번호를 입력하세요."
                     name="password"
