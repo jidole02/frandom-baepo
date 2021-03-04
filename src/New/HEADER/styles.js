@@ -60,6 +60,7 @@ export const MenuBar = styled.ul`
     width:330px;
     display:flex;
     justify-content:space-between;
+    align-items:center;
     @media screen and (max-width:768px){
         width:100%;
         margin-top:20px;
@@ -83,5 +84,19 @@ export const Menu = styled(NavLink)`
         :first-of-type{
             margin-top:0;
         }
+    }
+`
+
+export const Profile = styled.img`
+    width:40px;
+    height:40px;
+    border-radius:80%;
+    margin-bottom:5%;
+    cursor: pointer;
+    :hover{
+        box-shadow:0px 0px 10px skyblue;
+    }
+    @media screen and (max-width:768px){
+        display:none;
     }
 `

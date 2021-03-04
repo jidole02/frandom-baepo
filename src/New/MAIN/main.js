@@ -1,6 +1,6 @@
 import * as s from './styles'
-import {ReactComponent as Ill} from '../ASSETS/일러스트1.svg'
-import {ReactComponent as Ill2} from '../ASSETS/일러스트2.svg'
+import {ReactComponent as Ill} from '../ASSETS/illust.svg'
+import {ReactComponent as Ill2} from '../ASSETS/illust2.svg'
 
 export default function MainPage() {
     return(

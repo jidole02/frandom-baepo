@@ -1,8 +1,8 @@
 import * as s from './styles'
 
-import {ReactComponent as Ill} from '../ASSETS/일러스트1.svg'
+import {ReactComponent as Ill} from '../ASSETS/illust.svg'
 
-import {ReactComponent as Ill2} from '../ASSETS/일러스트2.svg'
+import {ReactComponent as Ill2} from '../ASSETS/illust2.svg'
 
 import { useHistory } from 'react-router'
 
@@ -71,21 +71,21 @@ const ChatingComponent = React.memo(()=> {
         setChating([
             ...Chating,
             { chating:data, id:1 }
-        ])
-        socket.emit("sendMessage", data) 
-        setData("")
+        ]);
+        socket.emit("sendMessage", data);
+        setData("");
     }
 
     useEffect(()=>{
         ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
-    },[Chating])
+    },[Chating]);
 
     const ReportModalOn=()=>{
         if(!match){
-            alert("상대방이 없습니다")
+            alert("상대방이 없습니다");
             return;
         }
-        setRModalState(!RModalState)
+        setRModalState(!RModalState);     
     }
 
     useEffect(()=>{

@@ -7,6 +7,7 @@ import MainPage from './New/MAIN/main';
 import LoginPage from './New/LOGIN/login';
 import SignupPage from './New/SIGNUP/signup';
 import ChatingComponent from './New/CHATING/chating';
+import Mypage from './New/MYPAGE/mypage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route exact path="/login" component={LoginPage}></Route>
       <Route exact path="/signup" component={SignupPage}></Route>
       <Route exact path="/chating" component={ChatingComponent}></Route>
+      <Route exact path="/mypage" component={Mypage}></Route>
     </s.Background>
     </Router>
   );

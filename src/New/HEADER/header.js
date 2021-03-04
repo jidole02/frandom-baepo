@@ -2,6 +2,7 @@ import * as s from './styles'
 import {mainColor} from '../../style/index'
 import {useHistory} from 'react-router-dom'
 import {useEffect, useState} from 'react'
+import IMG from '../ASSETS/profile.PNG'
 
 export default function Header() {
     const LinkStyle = {borderBottom:`4px solid ${mainColor}`}
@@ -24,6 +25,7 @@ export default function Header() {
         setMenu(!menu)
         setLogin(false)
         window.localStorage.setItem("token","");
+        window.localStorage.setItem("RToken","");   
         window.location.reload()
     }
 
@@ -68,17 +70,18 @@ export default function Header() {
                     {login && 
                     <>
                         <s.Menu 
-                            to="/login"
-                            onClick={closeHeader}
-                            activeStyle={LinkStyle}
-                        ></s.Menu>
-                        <s.Menu 
                             to=""
                             onClick={Logout}
                         >로그아웃</s.Menu>
                         <s.Menu 
                             to="/chating"
                         >시작하기</s.Menu>
+                        <s.Profile 
+                            src={IMG}
+                            onClick={()=>{
+                                history.push("/mypage")
+                            }}
+                        />
                     </>
                     }
                     {!login && 
