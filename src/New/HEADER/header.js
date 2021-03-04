@@ -5,13 +5,18 @@ import {useEffect, useState} from 'react'
 import IMG from '../ASSETS/profile.PNG'
 
 export default function Header() {
+
     const LinkStyle = {borderBottom:`4px solid ${mainColor}`}
+
     const history = useHistory();
+
     const [login, setLogin] = useState(false);
+
     const [menu,setMenu] = useState(false);
+    
     const [media,setMedia] = useState(false);
+
     useEffect(()=>{
-        console.log(localStorage.getItem("token"))
         if((window.localStorage.getItem("token") != undefined 
         && window.localStorage.getItem("token")!=="") 
         && window.localStorage.getItem("token") !== "null"){

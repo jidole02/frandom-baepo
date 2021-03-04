@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react/cjs/react.development'
+import { useEffect, useState } from 'react'
 import * as s from './styles'
 import IMG from '../ASSETS/profile.PNG'
 import {useHistory} from 'react-router-dom'
