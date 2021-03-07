@@ -1,9 +1,12 @@
 import * as s from './styles'
+
 import axios from 'axios'
+
 import {useHistory} from 'react-router-dom'
+
 import {useState} from 'react'
+
 import Loading from '../../components/PUBLIC/loading';
-import { useEffect } from 'react/cjs/react.development';
 
 export default function SignupPage() {
     const [val, SetVal] = useState({
@@ -21,6 +24,8 @@ export default function SignupPage() {
     const [checkEmail,setCheckEmail] = useState(false)
 
     const [sendCheck,setSendCheck] = useState(false)
+
+    const [btn,setBtn] = useState(false)
 
     const { password, email, name, age, accessCode } = val;
 
@@ -90,8 +95,12 @@ export default function SignupPage() {
             }
         }).then(()=>{
             timer()
+            setBtn(true)
             alert("인증번호를 발송했습니다.")
             setSendCheck(true)
+            setTimeout(()=>{
+                setBtn(false)
+            },30000)
         }).catch(()=>{
             alert("이메일이 잘못됬습니다")
         })
@@ -131,6 +140,7 @@ export default function SignupPage() {
                     />
                 <s.SendBtn
                     onClick={SendEmail}
+                    style={btn ? {display:"none"} : {display:"block"}}
                 >인증번호 발송</s.SendBtn>
                 </s.AccessEmail>
                 <s.AccessEmail>
