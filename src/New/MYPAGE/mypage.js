@@ -38,24 +38,18 @@ export default function Mypage() {
                 history.push("/")
             }
         }
-        axios({
-            method:"get",
-            url:"https://sonchaegeon.shop/v1/user/profile",
-            headers:{
-                "Content-type" : "application/json",
-                "Authorization" : "Bearer " + window.localStorage.getItem("token")
-            },
-            data:{}
-        }).then((e)=>{
+        R.WithTokenGetRequest("v1/user/profile",{},"프로필")
+        .then((e)=>{
+            console.log(e);
             setData({
-                name: e.data.username,
-                email: e.data.email,
-                gender: e.data.gender
+                name: e.username,
+                email: e.email,
+                gender: e.gender
             })
             setLoad(false)
-            console.log(e);
-        }).catch((e)=>{
-            console.log(e);
+        }).catch(()=>{
+            alert("정보를 가져오는데 실패했습니다.")
+            history.push("/")
         })
     },[])
     return(

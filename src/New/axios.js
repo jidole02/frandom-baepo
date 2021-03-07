@@ -8,7 +8,7 @@ export const AccessTokenRequest =()=>{
         url:"https://sonchaegeon.shop/v1/auth/refresh",
         headers:{
           "Content-type":"application/json", 
-          "x-refresh-token":`Bearer ${window.localStorage.getItem("Rtoken")}`
+          "x-refresh-token":`${window.localStorage.getItem("Rtoken")}`
         },
         data:{}
       }).then((e)=>{
@@ -76,8 +76,9 @@ export const WithTokenGetRequest=(url,data,cons)=>{
         console.log(res.data);
         return res.data;
     }).catch((err)=>{
-        console.log(err)
-        if(err.response.status === 410){
+        console.log(err.response.status)
+        if(err.response.status == 410){
+            console.log("sdf")
             AccessTokenRequest();
         } 
         console.log(cons + "실패");
