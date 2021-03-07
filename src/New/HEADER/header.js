@@ -16,6 +16,8 @@ export default function Header() {
     
     const [media,setMedia] = useState(false);
 
+    const [url,setUrl] = useState(IMG)
+
     useEffect(()=>{
         if((window.localStorage.getItem("token") != undefined 
         && window.localStorage.getItem("token")!=="") 
@@ -25,6 +27,12 @@ export default function Header() {
             }
         }
     },[window.localStorage.getItem("token")])
+
+    useEffect(()=>{
+        if(window.localStorage.getItem("img") != null){
+            setUrl(window.localStorage.getItem("img"))
+        }
+    },[window.localStorage.getItem("img")])
     
     const Logout =()=>{
         setMenu(!menu)
@@ -82,7 +90,7 @@ export default function Header() {
                             to="/chating"
                         >시작하기</s.Menu>
                         <s.Profile 
-                            src={IMG}
+                            src={url}
                             onClick={()=>{
                                 history.push("/mypage")
                             }}

@@ -12,8 +12,6 @@ import { io } from "socket.io-client";
 
 import ReportModal from './reportModal'
 
-import axios from 'axios'
-
 import * as R from '../axios'
 
 const socket = io("wss://sonchaegeon.shop", {
@@ -186,24 +184,11 @@ const ChatingComponent = React.memo(()=> {
         console.log(URL.createObjectURL(e.target.files[0]))
         fd.append("file",e.target.files[0]);
 
-        R.WithTokenRequest("v1/file,",fd,"사진 업로드")
+        R.FileRequest("v1/file",fd,"사진 업로드")
         .then((e)=>{
             console.log(e);
+            socket.emit("fileUpload",{url:e.url},"사진 업로드")
         })
-/*         axios({
-            method:"post",
-            url:"https://sonchaegeon.shop/v1/file",
-            headers:{
-                "Content-type":"multipart/form-data", 
-                "Authorization":"Bearer " + window.localStorage.getItem("token")
-            },
-            data:fd
-        }).then((e)=>{
-            socket.emit("fileUpload",{url:e.data.url})
-        }).catch((e)=>{
-            console.log(e)
-        }) */
-
         setTimeout(()=>{
             ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
         },100)

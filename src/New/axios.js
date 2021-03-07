@@ -77,10 +77,27 @@ export const WithTokenGetRequest=(url,data,cons)=>{
         return res.data;
     }).catch((err)=>{
         console.log(err.response.status)
-        if(err.response.status == 410){
+        if(err.response.status === 410){
             console.log("sdf")
             AccessTokenRequest();
         } 
         console.log(cons + "실패");
+    })
+}
+
+export const FileRequest=(url,data,cons)=>{
+    return axios({
+        method:"post",
+        url:`https://sonchaegeon.shop/${url}`,
+        headers:{
+            "Content-type":"multipart/form-data", 
+            "Authorization":"Bearer " + window.localStorage.getItem("token")
+        },
+        data:data
+    }).then((e)=>{
+        return e.data
+    }).catch((e)=>{
+        console.log(cons + "실패")
+        console.log(e)
     })
 }
