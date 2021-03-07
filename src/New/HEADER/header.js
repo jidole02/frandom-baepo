@@ -30,7 +30,7 @@ export default function Header() {
         setMenu(!menu)
         setLogin(false)
         window.localStorage.setItem("token","");
-        window.localStorage.setItem("RToken","");   
+        window.localStorage.setItem("Rtoken","");   
         window.location.reload()
     }
 

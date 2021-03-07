@@ -1,9 +1,16 @@
 import axios from 'axios'
+
 import { useEffect, useState } from 'react'
+
 import * as s from './styles'
+
 import IMG from '../ASSETS/profile.PNG'
+
 import {useHistory} from 'react-router-dom'
+
 import Loading from '../../components/PUBLIC/loading'
+
+import * as R from '../axios'
 
 export default function Mypage() {
 
@@ -36,22 +43,13 @@ export default function Mypage() {
             url:"https://sonchaegeon.shop/v1/user/profile",
             headers:{
                 "Content-type" : "application/json",
-                "Authorization" : `Bearer ${window.localStorage.getItem("token")}`
+                "Authorization" : "Bearer " + window.localStorage.getItem("token")
             },
             data:{}
-        }).then((res)=>{
-            console.log(res)
-            const {data} = res;
-            console.log(data.profile_img)
-            setData({
-                name:data.username,
-                email:data.email,
-                gender:data.gender,
-                url:data.profile_img
-            })
-            setLoad(false)
-        }).catch((err)=>{
-            console.log(err)
+        }).then((e)=>{
+            console.log(e);
+        }).catch((e)=>{
+            console.log(e);
         })
     },[])
     return(

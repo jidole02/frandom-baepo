@@ -1,8 +1,25 @@
 import * as s from './styles'
 import {ReactComponent as Ill} from '../ASSETS/illust.svg'
 import {ReactComponent as Ill2} from '../ASSETS/illust2.svg'
+import { useEffect } from 'react/cjs/react.development';
+import axios from 'axios'
 
 export default function MainPage() {
+    useEffect(()=>{
+        axios({
+            method:"get",
+            url:"https://sonchaegeon.shop/v1/user/profile",
+            headers:{
+                "Content-type" : "application/json",
+                "Authorization" : "Bearer " + window.localStorage.getItem("token")
+            },
+            data:{}
+        }).then((e)=>{
+            console.log(e);
+        }).catch((e)=>{
+            console.log(e);
+        })
+    },[])
     return(
         <>
             <s.SvgContainer>

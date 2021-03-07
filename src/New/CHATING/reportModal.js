@@ -4,6 +4,8 @@ import { useState } from 'react'
 
 import {Request} from '../../components/axios'
 
+import * as R from '../axios'
+
 export default function ReportModal(e) {
     const [reportData,setReportData] = useState({
         title:"",
@@ -17,6 +19,14 @@ export default function ReportModal(e) {
         })
     }
     const ReportYou =()=>{
+
+        R.WithTokenRequest("v1/user/report",
+        {title : reportData.title,description : reportData.cause},
+        "신고")
+        .then((e)=>{
+            console.log(e)
+        })
+
         Request("POST", "v1/user/report",{"Content-type":"application/json", "Authorization":"Bearer " + window.localStorage.getItem("token")}, 
         {
             title : reportData.title,

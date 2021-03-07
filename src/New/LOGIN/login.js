@@ -1,8 +1,12 @@
 import * as s from './styles'
+
 import React,{useState} from 'react'
-import axios from 'axios'
+
 import {useHistory} from 'react-router-dom'
+
 import Loading from '../../components/PUBLIC/loading';
+
+import * as R from '../axios'
 
 export default function LoginPage() {
     const history = useHistory();
@@ -20,37 +24,16 @@ export default function LoginPage() {
     }
     const SubInputValue =()=>{
         setToggle(true)
-        axios({
-            method:"post",
-            url:"https://sonchaegeon.shop/v1/auth/login",
-            headers:{
-                "Content-Type": "application/json" 
-            },
-            data:{
-                "email" : data.id,
-                "password" : data.password
-            }
-        }).then((e)=>{
-            window.localStorage.setItem("token", e.data.accessToken)
+        R.AuthRequest("v1/auth/login",{"email" : data.id,"password" : data.password},"로그인")
+        .then((e)=>{
+            console.log(e)
+            window.localStorage.setItem("Rtoken",e.refreshToken)
+            window.localStorage.setItem("token", e.accessToken)
             history.push('/')
-            setTimeout(()=>{
-                axios({
-                  method:"get",
-                  url:"https://sonchaegeon.shop/v1/auth/refresh",
-                  headers:{
-                    "Content-type":"application/json", 
-                    "x-refresh-token":"Bearer " + e.data.refreshToken
-                  },
-                  data:{}
-                }).then((e)=>{
-                    window.localStorage.setItem("RToken",e.data.accessToken)
-                    window.localStorage.setItem("token", e.data.accessToken)
-                })
-            },7200000)
-        }).catch((err)=>{
-            window.alert(err.response.data.error.message)
+        }).catch(()=>{
+            alert("다시 확인해주세요.")
             setToggle(false)
-        }) 
+        })
     }
     return(
         <>
@@ -62,12 +45,14 @@ export default function LoginPage() {
                 placeholder="이메일을 입력하세요."
                 name="id"
                 onChange={Input}
+                value={data.id}
             />
             <s.Input
                 placeholder="비밀번호를 입력하세요."
                 name="password"
                 onChange={Input}
                 type="password"
+                value={data.password}
             />
             <s.Btn
                 onClick={SubInputValue}

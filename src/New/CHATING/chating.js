@@ -14,6 +14,8 @@ import ReportModal from './reportModal'
 
 import axios from 'axios'
 
+import * as R from '../axios'
+
 const socket = io("wss://sonchaegeon.shop", {
     query: {
         token: "Bearer " + window.localStorage.getItem("token") 
@@ -141,11 +143,11 @@ const ChatingComponent = React.memo(()=> {
                 id:3
             }
         ])
-/*         if(window.localStorage.getItem("token") != undefined){
+        if(window.localStorage.getItem("token") != undefined){
             setTimeout(()=>{
                 ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
             },100)
-        } */
+        } 
     },[url])
 
     useEffect(()=>{
@@ -184,7 +186,11 @@ const ChatingComponent = React.memo(()=> {
         console.log(URL.createObjectURL(e.target.files[0]))
         fd.append("file",e.target.files[0]);
 
-        axios({
+        R.WithTokenRequest("v1/file,",fd,"사진 업로드")
+        .then((e)=>{
+            console.log(e);
+        })
+/*         axios({
             method:"post",
             url:"https://sonchaegeon.shop/v1/file",
             headers:{
@@ -196,7 +202,7 @@ const ChatingComponent = React.memo(()=> {
             socket.emit("fileUpload",{url:e.data.url})
         }).catch((e)=>{
             console.log(e)
-        })
+        }) */
 
         setTimeout(()=>{
             ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
