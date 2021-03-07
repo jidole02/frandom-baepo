@@ -47,6 +47,12 @@ export default function Mypage() {
             },
             data:{}
         }).then((e)=>{
+            setData({
+                name: e.data.username,
+                email: e.data.email,
+                gender: e.data.gender
+            })
+            setLoad(false)
             console.log(e);
         }).catch((e)=>{
             console.log(e);

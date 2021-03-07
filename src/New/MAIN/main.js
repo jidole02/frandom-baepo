@@ -1,7 +1,7 @@
 import * as s from './styles'
 import {ReactComponent as Ill} from '../ASSETS/illust.svg'
 import {ReactComponent as Ill2} from '../ASSETS/illust2.svg'
-import { useEffect } from 'react/cjs/react.development';
+import { useEffect } from 'react';
 import axios from 'axios'
 
 export default function MainPage() {
