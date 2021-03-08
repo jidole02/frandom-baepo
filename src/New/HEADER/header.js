@@ -1,8 +1,14 @@
 import * as s from './styles'
+
 import {mainColor} from '../../style/index'
+
 import {useHistory} from 'react-router-dom'
+
 import {useEffect, useState} from 'react'
+
 import IMG from '../ASSETS/profile.PNG'
+
+import * as R from '../axios'
 
 export default function Header() {
 
@@ -46,12 +52,9 @@ export default function Header() {
     useEffect(()=>{
         if(localStorage.getItem("token") != undefined){
             if(localStorage.getItem("token").length < 10){
-                localStorage.setItem("token", localStorage.getItem("RToken"));
+                localStorage.setItem("token", localStorage.getItem("Rtoken"));
             }
         }
-    },[])
-
-    useEffect(()=>{
         setInterval(()=>{
             if(window.innerWidth < 768){
                 setMedia(true);
@@ -60,6 +63,7 @@ export default function Header() {
                 setMedia(false)
             }
         },500)
+        
     },[])
     
     const closeHeader =()=>{

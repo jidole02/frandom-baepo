@@ -1,23 +1,18 @@
 import * as s from './styles'
+
 import {ReactComponent as Ill} from '../ASSETS/illust.svg'
+
 import {ReactComponent as Ill2} from '../ASSETS/illust2.svg'
+
 import { useEffect } from 'react';
-import axios from 'axios'
+
+import * as R from '../axios'
 
 export default function MainPage() {
     useEffect(()=>{
-        axios({
-            method:"get",
-            url:"https://sonchaegeon.shop/v1/user/profile",
-            headers:{
-                "Content-type" : "application/json",
-                "Authorization" : "Bearer " + window.localStorage.getItem("token")
-            },
-            data:{}
-        }).then((e)=>{
-            console.log(e);
-        }).catch((e)=>{
-            console.log(e);
+        R.WithTokenGetRequest("v1/user/profile",{},"프로필 가져오기")
+        .then((e)=>{
+            console.log(e)
         })
     },[])
     return(

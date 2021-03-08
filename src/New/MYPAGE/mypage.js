@@ -30,7 +30,7 @@ export default function Mypage() {
             alert("로그인 후 이용해주세요!")
             history.push("/")
         }
-        if(window.localStorage.getItem("token") != undefined){ 
+        if(window.localStorage.getItem("token") == null){ 
             if(window.localStorage.getItem("token").length < 10){    
                 alert("로그인 후 이용해주세요!")
                 history.push("/")

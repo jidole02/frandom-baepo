@@ -12,7 +12,7 @@ export const AccessTokenRequest =()=>{
         },
         data:{}
       }).then((e)=>{
-          console.log(e)
+          console.log(e)    
           window.localStorage.setItem("token", e.data.accessToken)
     }).catch((e)=>{
         console.log(e)
@@ -76,6 +76,10 @@ export const WithTokenGetRequest=(url,data,cons)=>{
         return res.data;
     }).catch((err)=>{
         console.log(err.response.status)
+        if(err.response.status == 410){
+            console.log("sdf")
+            AccessTokenRequest();
+        } 
         if(window.localStorage.getItem("Rtoken") == undefined){
             window.localStorage.setItem("token","");
             return;
@@ -84,10 +88,6 @@ export const WithTokenGetRequest=(url,data,cons)=>{
             window.localStorage.setItem("token","");
             return;
         }
-        if(err.response.status == 410){
-            console.log("sdf")
-            AccessTokenRequest();
-        } 
         console.log(cons + "실패");
     })
 }
