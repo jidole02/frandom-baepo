@@ -26,12 +26,11 @@ export default function LoginPage() {
         setToggle(true)
         R.AuthRequest("v1/auth/login",{"email" : data.id,"password" : data.password},"로그인")
         .then((e)=>{
-            console.log(e)
             window.localStorage.setItem("Rtoken",e.refreshToken)
             window.localStorage.setItem("token", e.accessToken)
             history.push('/')
         }).catch(()=>{
-            alert("다시 확인해주세요.")
+            alert("아이디 / 비밀번호를 확인하세요.")
             setToggle(false)
         })
     }

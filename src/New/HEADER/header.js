@@ -19,12 +19,13 @@ export default function Header() {
     const [url,setUrl] = useState(IMG)
 
     useEffect(()=>{
-        if((window.localStorage.getItem("token") != undefined 
-        && window.localStorage.getItem("token")!=="") 
-        && window.localStorage.getItem("token") !== "null"){
-            if(window.localStorage.getItem("token").length > 1){
+        if(window.localStorage.getItem("token") != undefined && window.localStorage.getItem("token")!= "null"){
+            if(window.localStorage.getItem("token") != null){
                 setLogin(true)
             }
+        } 
+        else{
+            setLogin(false)
         }
     },[window.localStorage.getItem("token")])
 
@@ -80,7 +81,7 @@ export default function Header() {
                         }}></i>
                 </s.MediaHeader>
                 <s.MenuBar style={media && menu ? {display:"none"} : {display:"flex"}}>
-                    {login && 
+                    {login === true && 
                     <>
                         <s.Menu 
                             to=""
@@ -97,7 +98,7 @@ export default function Header() {
                         />
                     </>
                     }
-                    {!login && 
+                    {login !== true && 
                         <>
                         <s.Menu 
                             to="/login"

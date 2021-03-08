@@ -14,6 +14,8 @@ import ReportModal from './reportModal'
 
 import * as R from '../axios'
 
+import IMG from '../ASSETS/profile.PNG'
+
 const socket = io("wss://sonchaegeon.shop", {
     query: {
         token: "Bearer " + window.localStorage.getItem("token") 
@@ -41,6 +43,13 @@ const ChatingComponent = React.memo(()=> {
     const [file,setFile] = useState("");
 
     const [url,setUrl] = useState("");
+
+    const [youData,setYouData] = useState({
+        name : "",
+        age : "",
+        url : "",
+        gender : ""
+    })
  
     const ChatingDiv = useRef();
 
@@ -100,7 +109,24 @@ const ChatingComponent = React.memo(()=> {
                 console.log("disconnect")
             });
             // 조인 룸
-            socket.on("joinRoom", () => {
+            socket.on("joinRoom", (e) => {
+                console.log(e)
+                if(e.profile_img == null){
+                    setYouData({
+                        name:e.name,
+                        url:IMG,
+                        age:e.age,
+                        gender:e.gender
+                    })
+                }
+                else{
+                    setYouData({
+                        name:e.name,
+                        url:e.profile_img,
+                        age:e.age,
+                        gender:e.gender
+                    })
+                }
                 socket.on("matched", () => {
                     console.log("상대방 매치")
                     setMatch(true)
@@ -134,6 +160,7 @@ const ChatingComponent = React.memo(()=> {
     }, [])
 
     useEffect(()=>{
+        if(url == null || url == "") return;
         setChating([
             ...Chating,
             {
@@ -149,6 +176,7 @@ const ChatingComponent = React.memo(()=> {
     },[url])
 
     useEffect(()=>{
+        if(Chating == null || Chating == "") return;
         setChating([
             ...Chating,
             { chating:msg, id:2 }
@@ -164,7 +192,18 @@ const ChatingComponent = React.memo(()=> {
         setChating([])
     }
 
+    const [num,setNum] = useState()
+
     useEffect(()=>{
+        for(let i=0;i<Chating.length;i++){
+            if(Chating[i].id === 2){
+                setNum(i)
+            }
+        }
+    },[Chating])
+
+    useEffect(()=>{
+        if(file == null || file == "") return;
         setChating([
             ...Chating,
             {
@@ -234,8 +273,8 @@ const ChatingComponent = React.memo(()=> {
                                 </s.MyChat>
                             }
                             {e.id === 2 && e.chating !== "" && 
-                                <s.YouChat>
-                                    <p>{you}</p>
+                                <s.YouChat id="chat">
+                                    {index === num && <p><s.Profile src={youData.url} alt=""/> <a>{you}</a></p>}
                                     <s.YouContainer>{e.chating}</s.YouContainer>
                                 </s.YouChat>
                             }

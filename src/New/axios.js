@@ -77,7 +77,15 @@ export const WithTokenGetRequest=(url,data,cons)=>{
         return res.data;
     }).catch((err)=>{
         console.log(err.response.status)
-        if(err.response.status === 410){
+        if(window.localStorage.getItem("Rtoken") == undefined){
+            window.localStorage.setItem("token","");
+            return;
+        }
+        if(window.localStorage.getItem("Rtoken") == null || window.localStorage.getItem("Rtoken") == "null"){
+            window.localStorage.setItem("token","");
+            return;
+        }
+        if(err.response.status == 410){
             console.log("sdf")
             AccessTokenRequest();
         } 

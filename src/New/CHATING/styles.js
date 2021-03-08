@@ -140,11 +140,22 @@ export const MyChat = styled.div`
     flex-direction:column;
     align-items:flex-end;
     margin-top:3%;
+    color:white;
     p{
         padding-bottom:16px;
         font-size:1.5vmin;
         color:gray;
+        display:flex;
+        align-items:center;
     }
+`
+
+export const Profile = styled.img`
+    width:40px;
+    height:40px;
+    border-radius:80%;
+    object-fit:cover;
+    box-shadow:0px 0px 10px whitesmoke;
 `
 
 export const MyContainer = styled.div`
@@ -168,6 +179,12 @@ export const YouChat = styled.div`
         padding-bottom:16px;
         font-size:1.5vmin;
         color:gray;
+        display:flex;
+        align-items:center;
+        a{
+            padding:0 10px;
+            font-size:13px;
+        }
     }
 `
 

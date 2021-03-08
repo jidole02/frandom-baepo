@@ -93,6 +93,7 @@ export const Profile = styled.img`
     border-radius:80%;
     margin-bottom:5%;
     cursor: pointer;
+    object-fit:cover;
     :hover{
         box-shadow:0px 0px 10px skyblue;
     }
