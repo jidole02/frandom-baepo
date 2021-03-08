@@ -54,7 +54,6 @@ export const WithTokenRequest=(url,data,cons)=>{
         return res.data;
     }).catch((err)=>{
         if(err.response.status === 410){
-            console.log("sdf")
             AccessTokenRequest();
         } 
         console.log(err);

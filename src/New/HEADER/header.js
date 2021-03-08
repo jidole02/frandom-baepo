@@ -38,8 +38,8 @@ export default function Header() {
     const Logout =()=>{
         setMenu(!menu)
         setLogin(false)
-        window.localStorage.setItem("token","");
-        window.localStorage.setItem("Rtoken","");   
+        window.localStorage.setItem("token",null);
+        window.localStorage.setItem("Rtoken",null);   
         window.location.reload()
     }
 
