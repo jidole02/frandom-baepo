@@ -8,11 +8,9 @@ import {useEffect, useState} from 'react'
 
 import IMG from '../ASSETS/profile.PNG'
 
-import * as R from '../axios'
-
 export default function Header() {
 
-    const LinkStyle = {borderBottom:`4px solid ${mainColor}`}
+    const LinkStyle = {borderBottom:`4px solid ${mainColor}`};
 
     const history = useHistory();
 
@@ -22,16 +20,15 @@ export default function Header() {
     
     const [media,setMedia] = useState(false);
 
-    const [url,setUrl] = useState(IMG)
+    const [url,setUrl] = useState(IMG);
 
     useEffect(()=>{
         if(window.localStorage.getItem("token") != undefined){
-            if(window.localStorage.getItem("token").length !== 0){
+            if(window.localStorage.getItem("token").length !== 0 && window.localStorage.getItem("token").length != ""){
                 setLogin(true)
             }
         } 
         else{
-            console.log("거짓")
             setLogin(false)
         }
     },[window.localStorage.getItem("token")])
@@ -55,7 +52,7 @@ export default function Header() {
 
     useEffect(()=>{
         if(localStorage.getItem("token") != undefined){
-            if(localStorage.getItem("token").length < 10){
+            if(localStorage.getItem("token").length > 10){
                 localStorage.setItem("token", localStorage.getItem("Rtoken"));
             }
         }
