@@ -25,27 +25,31 @@ export default function Header() {
     const [url,setUrl] = useState(IMG)
 
     useEffect(()=>{
-        if(window.localStorage.getItem("token") != undefined && window.localStorage.getItem("token")!= "null"){
-            if(window.localStorage.getItem("token") != null){
+        if(window.localStorage.getItem("token") != undefined){
+            if(window.localStorage.getItem("token").length !== 0){
                 setLogin(true)
             }
         } 
         else{
+            console.log("거짓")
             setLogin(false)
         }
     },[window.localStorage.getItem("token")])
 
     useEffect(()=>{
-        if(window.localStorage.getItem("img") != null){
-            setUrl(window.localStorage.getItem("img"))
+        if(window.localStorage.getItem("img") != undefined){
+            if(window.localStorage.getItem("img").length > 10){
+                setUrl(window.localStorage.getItem("img"))
+            }
         }
     },[window.localStorage.getItem("img")])
     
     const Logout =()=>{
         setMenu(!menu)
         setLogin(false)
-        window.localStorage.setItem("token",null);
-        window.localStorage.setItem("Rtoken",null);   
+        window.localStorage.setItem("token","");
+        window.localStorage.setItem("Rtoken","");  
+        window.localStorage.setItem("img","");   
         window.location.reload()
     }
 
@@ -102,7 +106,7 @@ export default function Header() {
                         />
                     </>
                     }
-                    {login !== true && 
+                    {login === false && 
                         <>
                         <s.Menu 
                             to="/login"
