@@ -150,6 +150,7 @@ const ChatingComponent = React.memo(()=> {
     useEffect(() => {
         // 메세지 받기
         socket.on("receiveMessage", (e,name) => {
+            console.log(e)
             setYou(name)
             setMsg(e)
         })
@@ -176,7 +177,6 @@ const ChatingComponent = React.memo(()=> {
     },[url])
 
     useEffect(()=>{
-        if(Chating == null || Chating == "") return;
         setChating([
             ...Chating,
             { chating:msg, id:2 }
@@ -327,13 +327,6 @@ const ChatingComponent = React.memo(()=> {
                             document.all.file.click();
                         }}
                     ># 파일전송</s.MenuBtn>
-{/*                     {
-                        out &&                     
-                        <s.MenuBtn
-                            onClick={Search}
-                            style={{backgroundColor:"tomato", color:"white"}}
-                        ># 상대찾기</s.MenuBtn>
-                    } */}
                 </s.MenuBar>
             </s.InputContainer>
         </s.MainContainer>
