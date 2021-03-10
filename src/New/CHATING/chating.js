@@ -15,6 +15,7 @@ import ReportModal from "./reportModal";
 import * as R from "../axios";
 
 import IMG from "../ASSETS/profile.PNG";
+import ProfileModal from "./profileModal";
 
 const socket = io("wss://sonchaegeon.shop", {
   query: {
@@ -42,6 +43,14 @@ const ChatingComponent = React.memo(() => {
   const [file, setFile] = useState("");
 
   const [url, setUrl] = useState("");
+
+  const [oppStatus,setOppStatus] = useState(0);
+
+  const [profileModalState,setProfileModal] = useState(false);
+
+  const profileModalOn = ()=>{
+    setProfileModal(!profileModalState);
+  }
 
   const [youData, setYouData] = useState({
     name: "",
@@ -147,6 +156,16 @@ const ChatingComponent = React.memo(() => {
     });
   }, []);
 
+  useEffect(()=>{
+    R.WithTokenGetRequest(`v1/user/like/${you}` , {} , "좋아요 갯수")
+    .then((e)=>{
+      console.log("SDf")
+      if(e != undefined){
+        setOppStatus(e.like);
+      }
+    })
+  },[you])
+
   useEffect(() => {
     if (url == null || url == "") return;
     setChating([
@@ -215,12 +234,9 @@ const ChatingComponent = React.memo(() => {
     }, 1000);
   };
 
-  useEffect(()=>{
-      R.WithTokenGetRequest(`v1/user/like/${localStorage.getItem("username")}` , {} , "좋아요 갯수")
-  },[])
-
   return (
     <>
+     { profileModalState && <ProfileModal data={youData} name={you} onModal={profileModalOn} /> }
       {OutModal && (
         <s.ModalContainer>
           <s.SmallModal>
@@ -260,7 +276,7 @@ const ChatingComponent = React.memo(() => {
                   <s.YouChat id="chat">
                     {index === num && (
                       <p>
-                        <s.Profile src={youData.url} alt="" /> <a>{you}</a>
+                        <s.Profile src={youData.url} onClick={profileModalOn} alt="" /> <a>{you}</a> <a style={{color:"skyblue"}}> 좋아요 {oppStatus} 개 </a>
                       </p>
                     )}
                     <s.YouContainer>{e.chating}</s.YouContainer>
