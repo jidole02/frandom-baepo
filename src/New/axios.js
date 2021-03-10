@@ -8,7 +8,7 @@ export const AccessTokenRequest = () => {
     url: "https://sonchaegeon.shop/v1/auth/refresh",
     headers: {
       "Content-type": "application/json",
-      "x-refresh-token": `${window.localStorage.getItem("Rtoken")}`,
+      "x-refresh-token" : `Bearer ${window.localStorage.getItem("Rtoken")}`,
     },
     data: {},
   })
@@ -17,8 +17,9 @@ export const AccessTokenRequest = () => {
       window.localStorage.setItem("token", e.data.accessToken);
     })
     .catch((e) => {
+      console.log("리프레쉬 토큰 실패")
       console.log(e);
-      window.localStorage.setItem("token", "");
+/*       window.localStorage.setItem("token", ""); */
     });
 };
 
@@ -81,7 +82,6 @@ export const WithTokenGetRequest = (url, data, cons) => {
     .then((res) => {
       console.log(cons + "성공");
       console.log(res.data);
-      if(res.data.username !== "undefined") localStorage.setItem("username",res.data.username);
       return res.data;
     })
     .catch((err) => {

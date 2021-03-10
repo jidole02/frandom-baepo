@@ -119,10 +119,12 @@ const ChatingComponent = React.memo(() => {
         });
       }
       socket.on("matched", () => {
+        console.log("매치")
         setMatch(true);
       });
     });
     socket.on("matched", () => {
+      console.log("매치")
       setMatch(true);
     });
     socket.on("leaveRoom", () => {
@@ -137,7 +139,6 @@ const ChatingComponent = React.memo(() => {
 
   useEffect(() => {
     socket.on("receiveMessage", (e, name) => {
-      console.log(e);
       setYou(name);
       setMsg(e);
     });

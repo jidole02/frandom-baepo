@@ -8,15 +8,13 @@ import { useEffect } from "react";
 
 import * as R from "../axios";
 
-import { useHistory } from 'react-router';
-
 export default function MainPage() {
-  const history = useHistory();
   useEffect(() => {
     R.WithTokenGetRequest("v1/user/profile", {}, "프로필 가져오기")
     .then(
       (e) => {
-        console.log(e);
+        window.localStorage.setItem("username",e.username);
+        window.localStorage.setItem("img",e.profile_img);
       }
     ).catch((e)=>{
       if(e.status === 401){
