@@ -25,7 +25,7 @@ export default function Header() {
     if (window.localStorage.getItem("token") != undefined) {
       if (
         window.localStorage.getItem("token").length !== 0 &&
-        window.localStorage.getItem("token").length != ""
+        window.localStorage.getItem("token") != ""
       ) {
         setLogin(true);
       }

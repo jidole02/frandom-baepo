@@ -8,14 +8,21 @@ import { useEffect } from "react";
 
 import * as R from "../axios";
 
+import { useHistory } from 'react-router';
+
 export default function MainPage() {
+  const history = useHistory();
   useEffect(() => {
     R.WithTokenGetRequest("v1/user/profile", {}, "프로필 가져오기")
     .then(
       (e) => {
         console.log(e);
       }
-    );
+    ).catch((e)=>{
+      if(e.status === 401){
+        window.localStorage.setItem("token","");
+      }
+    })
   }, []);
   return (
     <>
@@ -34,10 +41,7 @@ export default function MainPage() {
         </s.SubIntro>
         <s.BtnContainer>
           <s.Btn
-            to=""
-            onClick={() => {
-              window.location.href = "/chating";
-            }}
+            to="/chating"
           >
             시작하기 {">"}
           </s.Btn>

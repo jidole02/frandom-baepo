@@ -101,7 +101,8 @@ const ChatingComponent = React.memo(() => {
       console.log("disconnect");
     });
     socket.on("joinRoom", (e) => {
-      console.log(e)
+      console.log("조인")
+      console.log(e)  
       if (e.profile_img == null) {
         setYouData({
           name: e.name,
