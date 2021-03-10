@@ -37,7 +37,6 @@ export default function Mypage() {
     }
     R.WithTokenGetRequest("v1/user/profile", {}, "프로필")
       .then((e) => {
-        window.localStorage.setItem("img", e.profile_img);
         if (e.profile_img == null) {
           setData({
             name: e.username,

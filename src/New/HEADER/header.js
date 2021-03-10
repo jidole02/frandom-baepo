@@ -52,11 +52,6 @@ export default function Header() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") != undefined) {
-      if (localStorage.getItem("token").length > 10) {
-        localStorage.setItem("token", localStorage.getItem("Rtoken"));
-      }
-    }
     setInterval(() => {
       if (window.innerWidth < 768) {
         setMedia(true);

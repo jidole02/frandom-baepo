@@ -30,6 +30,7 @@ export default function LoginPage() {
       "로그인"
     )
       .then((e) => {
+        window.localStorage.setItem("img", e.url);
         window.localStorage.setItem("Rtoken", e.refreshToken);
         window.localStorage.setItem("token", e.accessToken);
         history.push("/");

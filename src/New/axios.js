@@ -68,6 +68,7 @@ export const WithTokenRequest = (url, data, cons) => {
 };
 
 export const WithTokenGetRequest = (url, data, cons) => {
+  console.log(url)
   return axios({
     method: "get",
     url: DOMAIN + url,

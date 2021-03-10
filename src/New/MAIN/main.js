@@ -10,7 +10,8 @@ import * as R from "../axios";
 
 export default function MainPage() {
   useEffect(() => {
-    R.WithTokenGetRequest("v1/user/profile", {}, "프로필 가져오기").then(
+    R.WithTokenGetRequest("v1/user/profile", {}, "프로필 가져오기")
+    .then(
       (e) => {
         console.log(e);
       }
