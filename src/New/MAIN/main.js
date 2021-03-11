@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import * as R from "../axios";
 
 export default function MainPage() {
-  useEffect(() => {
+/*   useEffect(() => {
     R.WithTokenGetRequest("v1/user/profile", {}, "프로필 가져오기")
     .then(
       (e) => {
@@ -21,7 +21,7 @@ export default function MainPage() {
         window.localStorage.setItem("token","");
       }
     })
-  }, []);
+  }, []); */
   return (
     <>
       <s.SvgContainer>
