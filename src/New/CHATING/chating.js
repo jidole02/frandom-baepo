@@ -142,10 +142,10 @@ const ChatingComponent = React.memo(() => {
         setMatch(true);
       });
     });
-    socket.on("matched", () => {
+/*     socket.on("matched", () => {
       console.log("매치")
       setMatch(true);
-    });
+    }); */
     socket.on("leaveRoom", () => {
       setMatch(false);
       setOutModal(true);
