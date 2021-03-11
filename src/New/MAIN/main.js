@@ -9,19 +9,14 @@ import { useEffect } from "react";
 import * as R from "../axios";
 
 export default function MainPage() {
-/*   useEffect(() => {
+  useEffect(() => {
     R.WithTokenGetRequest("v1/user/profile", {}, "프로필 가져오기")
     .then(
       (e) => {
-        window.localStorage.setItem("username",e.username);
-        window.localStorage.setItem("img",e.profile_img);
+        console.log(e);
       }
-    ).catch((e)=>{
-      if(e.status === 401){
-        window.localStorage.setItem("token","");
-      }
-    })
-  }, []); */
+    );
+  }, []);
   return (
     <>
       <s.SvgContainer>
@@ -39,7 +34,10 @@ export default function MainPage() {
         </s.SubIntro>
         <s.BtnContainer>
           <s.Btn
-            to="/chating"
+            to=""
+            onClick={() => {
+              window.location.href = "/chating";
+            }}
           >
             시작하기 {">"}
           </s.Btn>

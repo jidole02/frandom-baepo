@@ -15,7 +15,6 @@ import ReportModal from "./reportModal";
 import * as R from "../axios";
 
 import IMG from "../ASSETS/profile.PNG";
-import ProfileModal from "./profileModal";
 
 const socket = io("wss://sonchaegeon.shop", {
   query: {
@@ -44,14 +43,6 @@ const ChatingComponent = React.memo(() => {
 
   const [url, setUrl] = useState("");
 
-  const [oppStatus,setOppStatus] = useState(0);
-
-  const [profileModalState,setProfileModal] = useState(false);
-
-  const profileModalOn = ()=>{
-    setProfileModal(!profileModalState);
-  }
-
   const [youData, setYouData] = useState({
     name: "",
     age: "",
@@ -68,10 +59,6 @@ const ChatingComponent = React.memo(() => {
       setData(e.target.value);
     }
   };
-
-  const GoodReflaction = ()=>{
-    setOppStatus(oppStatus + 1);
-  }
 
   useEffect(() => {
     if (window.localStorage.getItem("token") == undefined) {
@@ -107,21 +94,14 @@ const ChatingComponent = React.memo(() => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("connect");
       socket.emit("search");
-    });
-
-    socket.emit("search", () => {
-      console.log("search");
     });
 
     socket.on("disconnect", () => {
       console.log("disconnect");
     });
-
     socket.on("joinRoom", (e) => {
-      console.log("조인")
-      console.log(e)  
+      console.log(e)
       if (e.profile_img == null) {
         setYouData({
           name: e.name,
@@ -138,27 +118,25 @@ const ChatingComponent = React.memo(() => {
         });
       }
       socket.on("matched", () => {
-        console.log("매치")
         setMatch(true);
       });
     });
-/*     socket.on("matched", () => {
-      console.log("매치")
+    socket.on("matched", () => {
       setMatch(true);
-    }); */
+    });
     socket.on("leaveRoom", () => {
       setMatch(false);
       setOutModal(true);
       setRModalState(false);
-      setProfileModal(false);
       socket.emit("leaveRoom", () => {
         console.log("leaveRoom");
       });
     });
-  },[]);
+  }, []);
 
   useEffect(() => {
     socket.on("receiveMessage", (e, name) => {
+      console.log(e);
       setYou(name);
       setMsg(e);
     });
@@ -167,15 +145,6 @@ const ChatingComponent = React.memo(() => {
     });
   }, []);
 
-/*   useEffect(()=>{
-    R.WithTokenGetRequest(`v1/user/like/${you}` , {} , "좋아요 갯수")
-    .then((e)=>{
-      if(e != undefined){
-        setOppStatus(e.like);
-      }
-    })
-  },[you])
- */
   useEffect(() => {
     if (url == null || url == "") return;
     setChating([
@@ -238,15 +207,18 @@ const ChatingComponent = React.memo(() => {
     });
     setTimeout(() => {
       ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
-    }, 300);
+    }, 100);
     setTimeout(() => {
       setFile("");
     }, 1000);
   };
 
+  useEffect(()=>{
+      R.WithTokenGetRequest(`v1/user/like/${localStorage.getItem("username")}` , {} , "좋아요 갯수")
+  },[])
+
   return (
     <>
-     { profileModalState && <ProfileModal data={youData} name={you} onModal={profileModalOn} GReflaction={GoodReflaction} /> }
       {OutModal && (
         <s.ModalContainer>
           <s.SmallModal>
@@ -286,7 +258,7 @@ const ChatingComponent = React.memo(() => {
                   <s.YouChat id="chat">
                     {index === num && (
                       <p>
-                        <s.Profile src={youData.url} onClick={profileModalOn} alt="" /> <a>{you}</a> <a style={{color:"skyblue"}}> 좋아요 {oppStatus} 개 </a>
+                        <s.Profile src={youData.url} alt="" /> <a>{you}</a>
                       </p>
                     )}
                     <s.YouContainer>{e.chating}</s.YouContainer>

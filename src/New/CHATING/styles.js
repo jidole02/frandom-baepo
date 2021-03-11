@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import { mainColor } from "../../style/index";
 
 export const SvgContainer = styled.div`
@@ -158,9 +157,6 @@ export const Profile = styled.img`
   object-fit: cover;
   box-shadow: 0px 0px 10px whitesmoke;
   cursor:pointer;
-  :hover{
-    box-shadow:0px 0px 10px skyblue;
-  }
 `;
 
 export const MyContainer = styled.div`
@@ -300,55 +296,3 @@ export const ReportInput = styled.input`
     color: ${mainColor};
   }
 `;
-
-export const ProfileContainer = styled.div`
-  width:400px;
-  height:500px;
-  background-color:white;
-  border-radius:5px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-`
-
-export const ProfileImg = styled.img`
-  width:200px;
-  height:200px;
-  border-radius:80%;
-  object-fit:cover;
-`
-
-export const ProfileIntro = styled.p`
-  color:black;
-  font-weight:bold;
-  font-size:25px;
-  margin-top:20px;
-  b{
-    color:${mainColor};
-    font-size:15px;
-  }
-`
-
-export const GoodBtn = styled.button`
-  width:130px;
-  height:40px;
-  margin-top:30px;
-  background-color:white;
-  border:none;  
-  border-radius:5px;
-  font-size:17px;
-  font-family:나눔스퀘어;
-  font-weight:bold;
-  color:${mainColor};
-  border:1px solid ${mainColor};
-  transition:1s;
-`
-
-export const Close = styled.p`
-  color:gray;
-  margin-top:20px;
-  font-size:15px;
-  cursor:pointer;
-  text-decoration:underline;
-`
