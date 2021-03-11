@@ -19,7 +19,8 @@ export const AccessTokenRequest = () => {
     .catch((e) => {
       console.log("리프레쉬 토큰 실패")
       console.log(e);
-/*       window.localStorage.setItem("token", ""); */
+      window.localStorage.setItem("token", "");
+
     });
 };
 

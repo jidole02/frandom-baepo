@@ -316,6 +316,7 @@ export const ProfileImg = styled.img`
   width:200px;
   height:200px;
   border-radius:80%;
+  object-fit:cover;
 `
 
 export const ProfileIntro = styled.p`

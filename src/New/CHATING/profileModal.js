@@ -9,18 +9,16 @@ const ProfileModal = (data) => {
 
   const [goodState, setGoodState] = useState(false);
 
+  console.log(data);
+
   const good = () => {
-    setGoodState(true);
-    if (goodState === true) {
-      alert("좋아요를 누르셨습니다.");
-      return;
-    }
     R.WithTokenRequest(
       `v1/user/like/${data.name}`,
       { username: data.name },
       "좋아요"
-    ).then((e) => {
-      console.log(e);
+    ).then(() => {
+      data.GReflaction();
+      setGoodState(true);
     });
   };
 

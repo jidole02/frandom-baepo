@@ -69,6 +69,10 @@ const ChatingComponent = React.memo(() => {
     }
   };
 
+  const GoodReflaction = ()=>{
+    setOppStatus(oppStatus + 1);
+  }
+
   useEffect(() => {
     if (window.localStorage.getItem("token") == undefined) {
       alert("로그인 후 이용해주세요!");
@@ -103,12 +107,18 @@ const ChatingComponent = React.memo(() => {
 
   useEffect(() => {
     socket.on("connect", () => {
+      console.log("connect");
       socket.emit("search");
+    });
+
+    socket.emit("search", () => {
+      console.log("search");
     });
 
     socket.on("disconnect", () => {
       console.log("disconnect");
     });
+
     socket.on("joinRoom", (e) => {
       console.log("조인")
       console.log(e)  
@@ -140,11 +150,12 @@ const ChatingComponent = React.memo(() => {
       setMatch(false);
       setOutModal(true);
       setRModalState(false);
+      setProfileModal(false);
       socket.emit("leaveRoom", () => {
         console.log("leaveRoom");
       });
     });
-  }, []);
+  },[]);
 
   useEffect(() => {
     socket.on("receiveMessage", (e, name) => {
@@ -156,16 +167,15 @@ const ChatingComponent = React.memo(() => {
     });
   }, []);
 
-  useEffect(()=>{
+/*   useEffect(()=>{
     R.WithTokenGetRequest(`v1/user/like/${you}` , {} , "좋아요 갯수")
     .then((e)=>{
-      console.log("SDf")
       if(e != undefined){
         setOppStatus(e.like);
       }
     })
   },[you])
-
+ */
   useEffect(() => {
     if (url == null || url == "") return;
     setChating([
@@ -228,7 +238,7 @@ const ChatingComponent = React.memo(() => {
     });
     setTimeout(() => {
       ChatingDiv.current.scrollTop = ChatingDiv.current.scrollHeight;
-    }, 100);
+    }, 300);
     setTimeout(() => {
       setFile("");
     }, 1000);
@@ -236,7 +246,7 @@ const ChatingComponent = React.memo(() => {
 
   return (
     <>
-     { profileModalState && <ProfileModal data={youData} name={you} onModal={profileModalOn} /> }
+     { profileModalState && <ProfileModal data={youData} name={you} onModal={profileModalOn} GReflaction={GoodReflaction} /> }
       {OutModal && (
         <s.ModalContainer>
           <s.SmallModal>
