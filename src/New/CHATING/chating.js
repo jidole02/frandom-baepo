@@ -12,6 +12,8 @@ import { io } from "socket.io-client";
 
 import ReportModal from "./reportModal";
 
+import ProfileModal from './profileModal'
+
 import * as R from "../axios";
 
 import IMG from "../ASSETS/profile.PNG";
@@ -101,6 +103,8 @@ const ChatingComponent = React.memo(() => {
       console.log("disconnect");
     });
     socket.on("joinRoom", (e) => {
+      setMatch(true);
+      console.log("joinroom")
       console.log(e)
       if (e.profile_img == null) {
         setYouData({
@@ -214,11 +218,24 @@ const ChatingComponent = React.memo(() => {
   };
 
   useEffect(()=>{
-      R.WithTokenGetRequest(`v1/user/like/${localStorage.getItem("username")}` , {} , "좋아요 갯수")
-  },[])
+    if(match){
+      console.log(you)
+      R.WithTokenGetRequest(`v1/user/like/${you}` , {} , "좋아요 갯수")
+      .then((e)=>{
+        console.log(e)
+      })
+    }
+  },[match])
+
+  const [profileModalState,setProfileModal] = useState(false);
+
+  const profileModalOn = ()=>{
+    setProfileModal(!profileModalState);
+  }
 
   return (
     <>
+      { profileModalState && <ProfileModal data={youData} name={you} onModal={profileModalOn} /> }
       {OutModal && (
         <s.ModalContainer>
           <s.SmallModal>
@@ -258,7 +275,7 @@ const ChatingComponent = React.memo(() => {
                   <s.YouChat id="chat">
                     {index === num && (
                       <p>
-                        <s.Profile src={youData.url} alt="" /> <a>{you}</a>
+                        <s.Profile onClick={profileModalOn} src={youData.url} alt="" /> <a>{you}</a>
                       </p>
                     )}
                     <s.YouContainer>{e.chating}</s.YouContainer>
