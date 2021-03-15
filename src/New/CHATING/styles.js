@@ -179,6 +179,10 @@ export const YouChat = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 3%;
+  b{
+    color:skyblue;
+    margin-left:10px;
+  }
   p {
     padding-bottom: 16px;
     font-size: 1.5vmin;

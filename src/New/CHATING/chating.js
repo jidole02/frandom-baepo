@@ -45,6 +45,10 @@ const ChatingComponent = React.memo(() => {
 
   const [url, setUrl] = useState("");
 
+  const [goodCnt,setGoodCnt] = useState(0);
+
+  const [profileModalState,setProfileModal] = useState(false);
+
   const [youData, setYouData] = useState({
     name: "",
     age: "",
@@ -121,17 +125,20 @@ const ChatingComponent = React.memo(() => {
           gender: e.gender,
         });
       }
-      socket.on("matched", () => {
+      socket.on("matched", (e) => {
+        console.log(e)
         setMatch(true);
       });
     });
-    socket.on("matched", () => {
+    socket.on("matched", (e) => {
+      console.log(e)
       setMatch(true);
     });
     socket.on("leaveRoom", () => {
       setMatch(false);
       setOutModal(true);
       setRModalState(false);
+      setProfileModal(false)
       socket.emit("leaveRoom", () => {
         console.log("leaveRoom");
       });
@@ -140,6 +147,7 @@ const ChatingComponent = React.memo(() => {
 
   useEffect(() => {
     socket.on("receiveMessage", (e, name) => {
+      console.log("sdfsfd")
       console.log(e);
       setYou(name);
       setMsg(e);
@@ -218,16 +226,14 @@ const ChatingComponent = React.memo(() => {
   };
 
   useEffect(()=>{
+    console.log(youData.name)
     if(match){
-      console.log(you)
-      R.WithTokenGetRequest(`v1/user/like/${you}` , {} , "좋아요 갯수")
+      R.WithTokenGetRequest(`v1/user/like/${youData.name}` , {} , "좋아요 갯수")
       .then((e)=>{
         console.log(e)
       })
     }
-  },[match])
-
-  const [profileModalState,setProfileModal] = useState(false);
+  },[youData])
 
   const profileModalOn = ()=>{
     setProfileModal(!profileModalState);
@@ -275,7 +281,7 @@ const ChatingComponent = React.memo(() => {
                   <s.YouChat id="chat">
                     {index === num && (
                       <p>
-                        <s.Profile onClick={profileModalOn} src={youData.url} alt="" /> <a>{you}</a>
+                        <s.Profile onClick={profileModalOn} src={youData.url} alt="" /> <a>{you}<b>좋아요 {goodCnt}개</b></a>
                       </p>
                     )}
                     <s.YouContainer>{e.chating}</s.YouContainer>
