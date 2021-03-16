@@ -37,8 +37,6 @@ const ChatingComponent = React.memo(() => {
 
   const [msg, setMsg] = useState("");
 
-  const [you, setYou] = useState("");
-
   const [match, setMatch] = useState(false);
 
   const [file, setFile] = useState("");
@@ -98,6 +96,24 @@ const ChatingComponent = React.memo(() => {
     setRModalState(!RModalState);
   };
 
+  const SET_DATA =(e)=>{
+    if (e.profile_img == null) {
+      setYouData({
+        name: e.username,
+        url: IMG,
+        age: e.age,
+        gender: e.gender,
+      });
+    } else {
+      setYouData({
+        name: e.username,
+        url: e.profile_img,
+        age: e.age,
+        gender: e.gender,
+      });
+    }
+  }
+
   useEffect(() => {
     socket.on("connect", () => {
       socket.emit("search");
@@ -110,29 +126,17 @@ const ChatingComponent = React.memo(() => {
       setMatch(true);
       console.log("joinroom")
       console.log(e)
-      if (e.profile_img == null) {
-        setYouData({
-          name: e.name,
-          url: IMG,
-          age: e.age,
-          gender: e.gender,
-        });
-      } else {
-        setYouData({
-          name: e.name,
-          url: e.profile_img,
-          age: e.age,
-          gender: e.gender,
-        });
-      }
+      SET_DATA(e)
       socket.on("matched", (e) => {
         console.log(e)
         setMatch(true);
+        SET_DATA(e)
       });
     });
     socket.on("matched", (e) => {
       console.log(e)
       setMatch(true);
+      SET_DATA(e)
     });
     socket.on("leaveRoom", () => {
       setMatch(false);
@@ -146,10 +150,7 @@ const ChatingComponent = React.memo(() => {
   }, []);
 
   useEffect(() => {
-    socket.on("receiveMessage", (e, name) => {
-      console.log("sdfsfd")
-      console.log(e);
-      setYou(name);
+    socket.on("receiveMessage", (e) => {
       setMsg(e);
     });
     socket.on("fileUpload", (res) => {
@@ -226,11 +227,10 @@ const ChatingComponent = React.memo(() => {
   };
 
   useEffect(()=>{
-    console.log(youData.name)
     if(match){
       R.WithTokenGetRequest(`v1/user/like/${youData.name}` , {} , "좋아요 갯수")
       .then((e)=>{
-        console.log(e)
+        setGoodCnt(e.like)
       })
     }
   },[youData])
@@ -239,9 +239,13 @@ const ChatingComponent = React.memo(() => {
     setProfileModal(!profileModalState);
   }
 
+  const like=()=>{
+    setGoodCnt(goodCnt+1);
+  }
+
   return (
     <>
-      { profileModalState && <ProfileModal data={youData} name={you} onModal={profileModalOn} /> }
+      { profileModalState && <ProfileModal data={youData} name={youData.name} onModal={profileModalOn} GReflaction={like} /> }
       {OutModal && (
         <s.ModalContainer>
           <s.SmallModal>
@@ -281,7 +285,7 @@ const ChatingComponent = React.memo(() => {
                   <s.YouChat id="chat">
                     {index === num && (
                       <p>
-                        <s.Profile onClick={profileModalOn} src={youData.url} alt="" /> <a>{you}<b>좋아요 {goodCnt}개</b></a>
+                        <s.Profile onClick={profileModalOn} src={youData.url} alt="" /> <a>{youData.name}<b>좋아요 {goodCnt}개</b></a>
                       </p>
                     )}
                     <s.YouContainer>{e.chating}</s.YouContainer>
