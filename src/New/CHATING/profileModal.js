@@ -17,8 +17,13 @@ const ProfileModal = (data) => {
       { username: data.name },
       "좋아요"
     ).then((e) => {
-/*       data.GReflaction(); */
+      if(e == undefined){
+        alert("이미 좋아요를 눌렀습니다.")
+        return;
+      }
+      data.GReflaction(); 
       setGoodState(true);
+      console.log(e)
     });
   };
 
