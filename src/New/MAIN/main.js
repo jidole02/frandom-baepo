@@ -6,16 +6,27 @@ import { ReactComponent as Ill2 } from "../ASSETS/illust2.svg";
 
 import { useEffect } from "react";
 
-import * as R from "../axios";
+import axios from 'axios'
 
 export default function MainPage() {
   useEffect(() => {
-    R.WithTokenGetRequest("v1/user/profile", {}, "프로필 가져오기")
-    .then(
-      (e) => {
-        console.log(e);
-      }
-    );
+    axios({
+      method: "get",
+      url: `https://sonchaegeon.shop/v1/user/profile`,
+      headers: {
+        "Content-type": "multipart/form-data",
+        "Authorization": "Bearer " + window.localStorage.getItem("token"),
+      },
+      data: {},
+    })
+      .then((e) => {
+        console.log(e.status)
+      })
+      .catch((e) => {
+        if(e.response.status === 401){
+          window.localStorage.setItem("token" , "");
+        }
+      });
   }, []);
   return (
     <>
