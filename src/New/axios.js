@@ -121,5 +121,6 @@ export const FileRequest = (url, data, cons) => {
     .catch((e) => {
       console.log(cons + "실패");
       console.log(e);
+      return e;
     });
 };
