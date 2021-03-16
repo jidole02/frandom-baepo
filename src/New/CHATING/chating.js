@@ -24,6 +24,25 @@ const socket = io("wss://sonchaegeon.shop", {
   },
 });
 
+socket.on('connect', () => {
+  console.log('connect');
+  socket.emit('search');
+});
+
+socket.on('matched', () => {
+  console.log('matched');
+  socket.emit('joinRoom');
+});
+
+socket.on('leaveRoom', (nick) => {
+  console.log('leaveRoom: ' + nick);
+});
+
+socket.on('joinRoom', (nick) => {
+  console.log(nick);
+  console.log('손채건 바보 멍청이');
+});
+
 const ChatingComponent = React.memo(() => {
   const history = useHistory();
 
@@ -127,16 +146,11 @@ const ChatingComponent = React.memo(() => {
       console.log("joinroom")
       console.log(e)
       SET_DATA(e)
-      socket.on("matched", (e) => {
-        console.log(e)
-        setMatch(true);
-        SET_DATA(e)
-      });
     });
-    socket.on("matched", (e) => {
-      console.log(e)
+    socket.on("matched", () => {
       setMatch(true);
-      SET_DATA(e)
+/*       SET_DATA(e) */
+      socket.emit("joinroom")
     });
     socket.on("leaveRoom", () => {
       setMatch(false);
@@ -149,6 +163,12 @@ const ChatingComponent = React.memo(() => {
     });
   }, []);
 
+  useEffect(()=>{
+    console.log("sdfsdf")
+    socket.on("joinroom",(e)=>{
+      console.log(e)
+    })
+  })
   useEffect(() => {
     socket.on("receiveMessage", (e) => {
       setMsg(e);

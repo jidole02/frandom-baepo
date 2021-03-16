@@ -8,6 +8,7 @@ import LoginPage from './New/LOGIN/login';
 import SignupPage from './New/SIGNUP/signup';
 import ChatingComponent from './New/CHATING/chating';
 import Mypage from './New/MYPAGE/mypage';
+import { useEffect } from 'react';
 
 function App() {
   return (

@@ -87,8 +87,11 @@ export const WithTokenGetRequest = (url, data, cons) => {
     .catch((err) => {
       console.log(err.response.status);
       if (err.response.status == 410) {
-        console.log("sdf");
+        console.log("토큰 만료");
         AccessTokenRequest();
+      }
+      if(err.response.status === 401){
+        window.localStorage.setItem("token" , "");
       }
       if (window.localStorage.getItem("Rtoken") == undefined) {
         window.localStorage.setItem("token", "");

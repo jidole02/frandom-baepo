@@ -8,8 +8,10 @@ import { useEffect } from "react";
 
 import axios from 'axios'
 
+import * as R from '../axios'
+
 export default function MainPage() {
-  useEffect(() => {
+/*   useEffect(() => {
     axios({
       method: "get",
       url: `https://sonchaegeon.shop/v1/user/profile`,
@@ -27,7 +29,8 @@ export default function MainPage() {
           window.localStorage.setItem("token" , "");
         }
       });
-  }, []);
+  }, []); */
+  R.WithTokenGetRequest("v1/user/profile",{},"프로필실험")
   return (
     <>
       <s.SvgContainer>
