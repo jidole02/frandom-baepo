@@ -23,7 +23,7 @@ const ProfileModal = (data) => {
       }
       data.GReflaction(); 
       setGoodState(true);
-      console.log(e)
+/*       console.log(e) */
     });
   };
 
