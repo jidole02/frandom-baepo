@@ -24,25 +24,6 @@ const socket = io("wss://sonchaegeon.shop", {
   },
 });
 
-socket.on('connect', () => {
-  console.log('connect');
-  socket.emit('search');
-});
-
-socket.on('matched', () => {
-  console.log('matched');
-  socket.emit('joinRoom');
-});
-
-socket.on('leaveRoom', (nick) => {
-  console.log('leaveRoom: ' + nick);
-});
-
-socket.on('joinRoom', (nick) => {
-  console.log(nick);
-  console.log('손채건 바보 멍청이');
-});
-
 const ChatingComponent = React.memo(() => {
   const history = useHistory();
 
@@ -134,6 +115,37 @@ const ChatingComponent = React.memo(() => {
   }
 
   useEffect(() => {
+    socket.on('connect', () => {
+      console.log('connect');
+      socket.emit('search');
+    });
+    
+    socket.on('matched', () => {
+      setMatch(true);
+      console.log('matched');
+      socket.emit('joinRoom');
+    });
+    
+    socket.on('leaveRoom', (nick) => {
+      console.log('leaveRoom: ' + nick);
+      setMatch(false);
+      setOutModal(true);
+      setRModalState(false);
+      setProfileModal(false)
+      socket.emit("leaveRoom", () => {
+        console.log("leaveRoom");
+      });
+    });
+    
+    socket.on('joinRoom', (nick) => {
+      console.log(nick);
+      setMatch(true);
+      console.log("joinroom")
+      SET_DATA(nick)
+    });
+
+
+/* 
     socket.on("connect", () => {
       socket.emit("search");
     });
@@ -149,7 +161,6 @@ const ChatingComponent = React.memo(() => {
     });
     socket.on("matched", () => {
       setMatch(true);
-/*       SET_DATA(e) */
       socket.emit("joinroom")
     });
     socket.on("leaveRoom", () => {
@@ -160,15 +171,8 @@ const ChatingComponent = React.memo(() => {
       socket.emit("leaveRoom", () => {
         console.log("leaveRoom");
       });
-    });
+    }); */
   }, []);
-
-  useEffect(()=>{
-    console.log("sdfsdf")
-    socket.on("joinroom",(e)=>{
-      console.log(e)
-    })
-  })
   useEffect(() => {
     socket.on("receiveMessage", (e) => {
       setMsg(e);
